@@ -1,0 +1,859 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Multi-level Effect Menu Demo</title>
+		<link rel="stylesheet" href="blmmenu.css">
+		<!--[if IE]>
+			<link rel="stylesheet" href="hack.css">
+		<![endif]-->
+		<script type="text/javascript" src="blmmenu.js">
+
+			/***********************************************
+			* Blm Multi-level Effect menu- By Brady Mulhollem at http://www.bradyontheweb.com/
+			* Script featured on DynamicDrive.com
+			* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and more
+			***********************************************/
+
+		</script>
+		<style type="text/css">
+		body{
+			padding-bottom: 200px;
+		}
+		</style>
+	</head>
+	<body>
+	<h2>Multi-level Effect Menu</h2>
+	<p>Mult-level effect menu is a very configurable javascript/css hybrid dropdown menu. It is capable of producing simple menus(both horizontal and vertical) or more advanced ones like the below. It should work in any standards compliant browser and IE.This menu has a number of fixes for different browsers to provide a consitent cross-browser script.</p>
+	
+		<div class="mlmenu vertical blindv blackwhite arrow delay inaccesible">
+		
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+			</ul>
+		</div>
+		<div class="mlmenu horizontal shake arrow bluewhite">
+		
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+			</ul>
+		</div>
+		<p>As the above shows it is capable of producing multiple menus on a single page.In fact you can have an unlimited number of menus. All produced with the following markup.</p>
+		<textarea style="width: 100%; height: 200px;">
+		<div class="mlmenu [horizontal|vertical] [effect] [arrow|plus] [delay] [color_class] [inaccesible]">
+		
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Link</a></li>
+			</ul>
+		</div>
+		</textarea>
+		<p>Then simply place this code in the head of the document.</p>
+		<textarea style="height: 100px;width: 100%;">
+		<link rel="stylesheet" href="css.css">
+		<!--[if IE]>
+			<link rel="stylesheet" href="hack.css">
+			<script type="text/javascript">
+			window.mlrunShim = true;
+			</script>
+		<![endif]-->
+		<script type="text/javascript" src="js.js">
+
+			/***********************************************
+			* Blm Multi-level Effect menu- By Brady Mulhollem at http://www.bradyontheweb.com/
+			* Script featured on DynamicDrive.com
+			* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and more
+			***********************************************/
+		</script>
+			</textarea>
+		<p>So lets go over the options</p>
+		<h2>Base</h2>
+		<p>The very minimum required to the menu is the following</p>
+		<textarea style="height:100px;width:100%;">
+		<div class="mlmenu [horizontal|vertical] [color]">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		</textarea>
+		<p>The first choice to make is horizontal or vertical. You simply place your choice right in the class portion. You also need to pick a color scheme. The default css icludes two blackwhite and bluewhite. Here's what we have so far.</p>
+			<div class="mlmenu vertical blackwhite">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+			<div class="mlmenu horizontal bluewhite">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<h2>Effects</h2>
+		<p>The menu is capable of producing five effects(only four in Internet Explorer). They are blink,shake,fade,blindv,blindh. To use them you simple inlcude them in the class name.</p>
+		<h3>Blink</h3>
+			<div class="mlmenu horizontal bluewhite blink">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<h3>Shake</h3>
+		<div class="mlmenu horizontal bluewhite shake">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<h3>Fade</h3>
+	<p><span style="color: red">Now works in Internet Explorer</span></p>
+			<div class="mlmenu horizontal bluewhite fade">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<h3>Blindh</h3>
+			<div class="mlmenu horizontal bluewhite blindh">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<h3>Blindv</h3>
+			<div class="mlmenu horizontal bluewhite blindv">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<h2>Other Switches</h2>
+	<p>The menu also supports two other "switches" unlike effects they may be both used at once</p>
+	<h3>arrow</h3>
+	<p>This switch will add a small arrows to any menu that has a submenu. The javascript always adds a class of "haschild" to an li element that would have an arrow.There is a small Internet Explorer bug with this switch that will cause the menu to have a slighly larger height that other browsers. In most cases this can be ignored.</p>
+			<div class="mlmenu horizontal bluewhite blindv arrow">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<h3>plus</h3>
+		<p>Similiar to the above this switch will add a + sign. It <em>can</em> be used with arrow but I don't see why you would want to!</p>
+		<div class="mlmenu horizontal bluewhite blindv plus">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<h3>delay</h3>
+		<p>This switch will cause a small delay before the menu disappears. This helps make the menu feel a little more solid.</p>
+		<div class="mlmenu horizontal bluewhite blindv plus inaccessible delay">
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a>
+					<ul>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+						<li><a href="#">Link</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<h3>inaccesible</h3>
+		<p>This switch will prevent the "flickering" when the page loads. This comes at a price though. Users with javascript disabled will not see the sub-menus. To negate this make top-level links point to a sitemap to prevent confusion</p>
+			<div class="mlmenu horizontal bluewhite blindv arrow inaccessible">
+			<ul>
+    	<li>
+        <a href="index.php"><img src="./icons/startseite.png" alt="startseite.png" /> Start</a>
+        <ul>                <li>
+                    <a href="index.php">
+                    <img src="./icons/startseite.png" alt="startseite.png" />                     Startseite</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=einstellungen" onclick="return false;">
+                    <img src="./icons/einstellungen.png" alt="einstellungen.png" />                     Einstellungen</a>
+                
+                <ul>                        <li><a href="index.php?tab=einstellungen&amp;auswahl=allgemein">Benutzereinstellungen</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=schuljahr&amp;jahr=2013">Ferien / freie Tage</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=schuljahr&amp;jahr=allgemein">feste Feiertage</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=faecher">F&auml;cher</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=schulen&amp;erstellen=raum">Schulen</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=noten_bew">Zensuren / Bewertung</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=sitzplan">Sitzordnungen</a>
+                        </li>
+                                            <li><a href="index.php?tab=einstellungen&amp;auswahl=programm">Programm</a>
+                        </li>
+                    </ul>                
+                
+                </li>
+                            <li>
+                    <a href="login/index.php?logout">
+                    <img src="./icons/fenster_schliessen.png" alt="fenster_schliessen.png" />                     msc abmelden</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="index.php?tab=stundenplan&amp;auswahl=stundenplan"><img src="./icons/pinwand.png" alt="pinwand.png" /> Pinnwand</a>
+        <ul>                <li>
+                    <a href="index.php?tab=stundenplan&amp;auswahl=stundenplan">
+                    <img src="./icons/stundenplan.png" alt="stundenplan.png" />                     Stundenplan</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplan&amp;auswahl=kalender">
+                    <img src="./icons/kalender.png" alt="kalender.png" />                     Kalender</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplan&amp;auswahl=konferenz">
+                    <img src="./icons/konferenz.png" alt="konferenz.png" />                     Dienstberatung</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplan&amp;auswahl=kollegen">
+                    <img src="./icons/kollegen.png" alt="kollegen.png" />                     Kollegen</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="index.php?tab=klassen"><img src="./icons/klasse.png" alt="klasse.png" /> Klassen</a>
+        <ul>                <li>
+                    <a href="index.php?tab=klassen&zweit=alle">
+                    <img src="./icons/neu.png" alt="neu.png" />                     Klassen&uuml;bersicht</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=schueleruebersicht&amp;auswahl=38">
+                    <img src="./icons/schueler.png" alt="schueler.png" />                     Sch&uuml;ler</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=statistik&amp;auswahl=38">
+                    <img src="./icons/statistik.png" alt="statistik.png" />                     Hausaufgabenstatistik</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=fk&amp;auswahl=38">
+                    <img src="./icons/fach_klasse.png" alt="fach_klasse.png" />                     F&auml;cher</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=sitzplan&amp;auswahl=38">
+                    <img src="./icons/sitzplan.png" alt="sitzplan.png" />                     Sitzpl&auml;ne</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=fehlzeiten&amp;auswahl=38">
+                    <img src="./icons/fehlzeit.png" alt="fehlzeit.png" />                     Fehlzeiten</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=elternabend&amp;auswahl=38">
+                    <img src="./icons/elternabend.png" alt="elternabend.png" />                     Elternabend</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=klassen&amp;option=schueleruebersicht&amp;option_2=schuelerliste&amp;auswahl=38">
+                    <img src="./icons/schuelerliste.png" alt="schuelerliste.png" />                     Sch&uuml;lerliste</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="formular/schueler_druckansicht.php?klasse=38" onclick="fenster(this.href, 'unwichtiger Titel'); return false;">
+                    <img src="./icons/klassenbuch.png" alt="klassenbuch.png" />                     Klassenbuchansicht</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="index.php?tab=noten"><img src="./icons/zensuren.png" alt="zensuren.png" /> Zensuren</a>
+        <ul>                <li>
+                    <a href="index.php?tab=noten&amp;auswahl=61">
+                                        Fach-Klassen-&Uuml;bersicht</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=noten&amp;eintragen=true&amp;auswahl=61">
+                                        Berechnung</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=noten">
+                                        Jahres&uuml;bersicht</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="index.php?tab=stundenplanung&amp;auswahl=fkplan"><img src="./icons/unterricht.png" alt="unterricht.png" /> Unterricht</a>
+        <ul>                <li>
+                    <a href="index.php?tab=material">
+                    <img src="./icons/material.png" alt="material.png" />                     Material</a>
+                
+                <ul>                        <li><a href="index.php?tab=material&amp;auswahl=themen"><img src="./icons/thema.png" alt="thema.png" /> Themen</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=aufgaben"><img src="./icons/aufgaben.png" alt="aufgaben.png" /> Aufgaben</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=test"><img src="./icons/test.png" alt="test.png" /> Tests</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=link"><img src="./icons/arbeitsblatt.png" alt="arbeitsblatt.png" /> Arbeitsbl&auml;tter / Dateien</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=buch"><img src="./icons/buch.png" alt="buch.png" /> B&uuml;cher</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=grafik"><img src="./icons/grafik.png" alt="grafik.png" /> Grafiken</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=sonstiges"><img src="./icons/sonstiges_material.png" alt="sonstiges_material.png" /> sonstiges Material</a>
+                        </li>
+                                            <li><a href="index.php?tab=material&amp;auswahl=suche"><img src="./icons/suchen.png" alt="suchen.png" /> Materialsuche</a>
+                        </li>
+                    </ul>                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=lernbereiche&amp;aktion=alle">
+                    <img src="./icons/fundus.png" alt="fundus.png" />                     Lehrpl&auml;ne / Fundus</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=fkplan">
+                    <img src="./icons/vorbereitet_nicht.png" alt="vorbereitet_nicht.png" />                     &Uuml;bersicht</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61">
+                    <img src="./icons/ok.png" alt="ok.png" />                     Stoffverteilung</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="formular/lb_uebersicht.php?fk=61">
+                                        Lernbereichs&uuml;bersicht</a>
+                
+                                
+                
+                </li>
+                            <li class="ui-state-disabled">
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61&amp;plan=&amp;ansicht=planung">
+                    <img src="./icons/einzelstunde.png" alt="einzelstunde.png" />                     Ustd.-Planung</a>
+                
+                <ul>                        <li><a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61&amp;plan=&amp;ansicht=planung"><img src="./icons/edit.png" alt="edit.png" /> Bearbeiten</a>
+                        </li>
+                                            <li><a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61&amp;plan=&amp;ansicht=druck"><img src="./icons/drucken.png" alt="drucken.png" /> Druckansicht</a>
+                        </li>
+                                            <li><a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61&amp;plan=&amp;ansicht=zweitansicht">Zweitansicht</a>
+                        </li>
+                                            <li><a href="javascript:fenster('./lessons/durchfuehransicht_lehrer.php?plan=','Durchf%C3%BChransicht');"><img src="./icons/durchfuehrung.png" alt="durchfuehrung.png" /> Durchf&uuml;hransicht</a>
+                        </li>
+                                            <li><a href="index.php?tab=stundenplanung&amp;auswahl=fkplan&amp;fk=61&amp;plan=&amp;ansicht=hefter"><img src="./icons/hefter.png" alt="hefter.png" /> Sch&uuml;lerhefter</a>
+                        </li>
+                    </ul>                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=hausaufgaben&amp;ha_fk=aktuell">
+                    <img src="./icons/hausaufgaben.png" alt="hausaufgaben.png" />                     HA-&Uuml;bersicht</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=stundenplanung&amp;auswahl=planstatistik">
+                    <img src="./icons/statistik_auswertung.png" alt="statistik_auswertung.png" />                     Unterrichtsstatistik</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href=""><img src="./icons/fach_klasse.png" alt="fach_klasse.png" /> <span class="fk" style="background-color: #add8e6;">Inf 8&gamma;</span></a>
+        <ul>                <li>
+                    <a href="index.php?tab=klassen&amp;zweit=alle">
+                    <img src="./icons/neu.png" alt="neu.png" />                     erstellen</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="">
+                                        EGE</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=67">
+                                        <span class="fk" style="background-color: #ffdab9;">TC 5&alpha; B</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=54">
+                                        <span class="fk" style="background-color: #ffa07a;">Ma 5&gamma;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=57">
+                                        <span class="fk" style="background-color: #fa8072;">Ma 6&beta;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=72">
+                                        <span class="fk" style="background-color: #deb887;">OLe 6&beta;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=58">
+                                        <span class="fk" style="background-color: #ff7f50;">Ma 6&gamma;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=59">
+                                        <span class="fk" style="background-color: #98fb98;">Inf 7&beta;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=62">
+                                        <span class="fk" style="background-color: #b0c4de;">Inf 8&alpha;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=68">
+                                        <span class="fk" style="background-color: #87ceeb;">Inf 8&beta;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=61">
+                                        <span class="fk" style="background-color: #add8e6;">Inf 8&gamma;</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=63">
+                                        <span class="fk" style="background-color: #32cd32;">Inf 10&alpha; 2</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=64">
+                                        <span class="fk" style="background-color: #00bfff;">Inf 10&beta; 2</span></a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="/~micha/lehrer/index.php?tab=lav&schule=6&amp;new_sc=65">
+                                        <span class="fk" style="background-color: #4682b4;">Inf 11</span></a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="">Verwaltung</a>
+        <ul>                <li>
+                    <a href="index.php?tab=personen&amp;schule=6">
+                                        Personen</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=schueler&amp;schule=6">
+                                        Sch&uuml;ler</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=eltern&amp;schule=6">
+                                        Eltern</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="">Leitung</a>
+        <ul>                <li>
+                    <a href="index.php?tab=angestellte&amp;schule=6">
+                                        Angestellte</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="index.php?tab=lav&amp;schule=6">
+                                        Lehrauftr&auml;ge</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="admin/stichtagsnoten.php">
+                                        Stichtagsnoten</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="admin/kopfnoten.php">
+                                        Kopfnoten</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+    	<li>
+        <a href="">Hilfe</a>
+        <ul>                <li>
+                    <a href="info.php" onclick="fenster(this.href, 'unwichtiger Titel'); return false;">
+                    <img src="./icons/hinweis.png" alt="hinweis.png" />                     &Uuml;ber...</a>
+                
+                                
+                
+                </li>
+                            <li class="ui-state-disabled">
+                    <a href="">
+                                        Direkthilfe</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="formular/hilfe.php?inhalt=start" onclick="fenster(this.href, 'unwichtiger Titel'); return false;">
+                    <img src="./icons/hilfe.png" alt="hilfe.png" />                     Starthilfe</a>
+                
+                                
+                
+                </li>
+                            <li>
+                    <a href="http://moses.kilu.de/kreda-wiki" onclick="fenster(this.href, 'unwichtiger Titel'); return false;">
+                    <img src="./icons/buch.png" alt="buch.png" />                     Kreda-Wiki</a>
+                
+                                
+                
+                </li>
+            </ul>	</li>
+        
+    
+</ul>
+		</div>
+		<h2>Browser Supports and downloads</h2>
+		<p>The menu has been tested in IE6(IE5.5 partial,there is slight issues with alignment and borders),Firefox 1.5+ and Opera 8.5+. The latest Safari release was tested on an older version of the script and was found to work.. All required files plus this page may be <a href="http://www.bradyontheweb.com/demo/ml_nav_demo/mleffect.zip">downloaded here</a></p>
+		<p>This menu is created by Brady Mulhollem. If you have any questions or comments you can email me at blm126 [AT] gmail.remove.this.com.</p>
+	</body>
+</html>

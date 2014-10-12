@@ -1,0 +1,180 @@
+/* -------------------------------------------------------------------
+// markItUp!
+// By Jay Salvat - http://markitup.jaysalvat.com/
+// ------------------------------------------------------------------*/
+.markItUp .bold a	{
+	background-image:url(images/bold.png);
+}
+.markItUp .italic a	{
+	background-image:url(images/italic.png);
+}
+.markItUp .underline a	{
+	background-image:url(images/underline.png);
+}
+
+.markItUp .grafic a	{
+	background-image:url(images/picture.png);
+}
+.markItUp .file a	{
+	background-image:url(images/link.png);
+}
+
+.markItUp .bullet a	{
+	background-image:url(images/list-bullet.png);
+}
+.markItUp .numeric a	{
+	background-image:url(images/list-numeric.png);
+}
+.markItUp .markItUpButton9 a	{
+	background-image:url(images/list-item.png);
+}
+
+.markItUp .equation a	{
+	background-image:url(images/equation.png);
+}
+.markItUp .plugin a	{
+	background-image:url(images/code.png);
+}
+	.markItUp .plugin .boxed a {
+		background-image:url(images/boxed.png);
+	}
+	.markItUp .plugin .ruled a {
+		background-image:url(images/ruled.png);
+	}
+	.markItUp .plugin .millimeter a {
+		background-image:url(images/millimeter.png);
+	}
+	.markItUp .plugin .border a {
+		background-image:url(images/border.png);
+	}
+	.markItUp .plugin .grouping a {
+		background-image:url(images/group.png);
+	}
+	.markItUp .plugin .geonext a {
+		background-image:url(images/geonext.png);
+	}
+	.markItUp .plugin .geogebra a {
+		background-image:url(images/geogebra.png);
+	}
+
+.markItUp .clean a {
+	background-image:url(images/clean.png);
+}
+.markItUp .preview a {
+	background-image:url(images/preview.png);
+}
+
+.markItUp .colors a {
+	background-image:url(images/colors.png);
+}
+	.markItUp .colors ul {
+		width:81px;
+		padding:1px;	
+	}
+	.markItUp .colors  li {
+		border:1px solid white;
+		width:25px;	height:25px;
+		overflow:hidden;
+		padding:0px; margin:0px;
+		float:left;
+	}
+	.markItUp .markItUpButton6 ul a {
+		width:25px;	height:25px;
+	}
+	.markItUp .colors ul a:hover {
+		background-color:none;
+	}
+	
+	.markItUp .colors .col1-1 a {
+		background:yellow;
+	}
+	.markItUp .colors .col1-2 a {
+		background:orange;
+	}
+	.markItUp .colors .col1-3 a {
+		background:red;
+	}
+	
+	.markItUp .colors .col2-1 a {
+		background:blue;
+	}
+	.markItUp .colors .col2-2 a {
+		background:purple;
+	}
+	.markItUp .colors .col2-3 a {
+		background:green;
+	}
+	
+	.markItUp .colors .col3-1 a {
+		background:white;
+	}
+	.markItUp .colors .col3-2 a {
+		background:gray;
+	}
+	.markItUp .colors .col3-3 a {
+		background:brown;
+	}
+
+
+.markItUp .tablegenerator a {
+	background-image:url(images/table.png);
+}
+
+
+	.markItUp .equation ul {
+		width:148px;
+		padding:1px;
+	}
+	.markItUp .equation  li {
+		border:1px solid white;
+		width:35px;	height:35px;
+		overflow:hidden;
+		padding:0px; margin:0px;
+		float:left;
+	}
+	.markItUp .equation ul a {
+		width:35px;	height:35px;
+		margin: -5px -2px; /* Bilder passend positionieren */
+		text-indent: 99px; white-space:nowrap; /* Text verschwinden lassen */
+	}
+	.markItUp .equation ul a:hover {
+		background-color:none;
+	}
+	
+	
+	.markItUp .equation .math-bruch a {
+		background-image:url(images/m-bruch.png);
+	}
+	.markItUp .equation .math-pot a {
+		background-image:url(images/m-pow.png);
+	}
+	.markItUp .equation .math-ind a {
+		background-image:url(images/m-index.png);
+	}
+	.markItUp .equation .math-sqrt a {
+		background-image:url(images/m-sqrt.png);
+	}
+	.markItUp .equation .math-root a {
+		background-image:url(images/m-root.png);
+	}
+	.markItUp .equation .math-lim a {
+		background-image:url(images/m-lim.png);
+	}
+	.markItUp .equation .math-sum a {
+		background-image:url(images/m-sum.png);
+	}
+	.markItUp .equation .math-int a {
+		background-image:url(images/m-integral.png);
+	}
+	.markItUp .equation .math-noverk a {
+		background-image:url(images/m-noverk.png);
+	}
+	.markItUp .equation .math-matr a {
+		background-image:url(images/m-matrix.png);
+	}
+	.markItUp .equation .math-help a {
+		background-image:url(images/m-help.png);
+	}
+	.markItUp .equation .calculator a {
+		background-image:url(images/calculator.png);
+	}

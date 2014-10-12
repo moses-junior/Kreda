@@ -1,0 +1,746 @@
+body {
+    background-color: #ffffff;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+	margin-top: 20px;
+	/*min-width: 1000px;*/
+}
+
+img.programm {
+	position: absolute;
+	top:15px; right:120px;
+	/*z-index:-1;*/
+}
+
+div.logo {
+	background: url(logo_kreide.png) no-repeat right 4px;
+	width: 105px;
+	height: 70px;
+	position: absolute;
+	top:4px; right:4px;
+	float: right;
+}
+
+/*
+div.programmname {
+	float: right;
+	width: 210px;
+	height: 60px;
+	margin-top: -20px;
+	padding-top: 10px;
+	font-family: Arial;
+	color: #362;
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+div.programmname div {
+	border-top: 1px solid #362;
+	font-size: 0.5em;
+	font-weight: normal;
+	color: #5a4;
+	width: 96px;
+}
+*/
+
+pre {
+	padding:0;
+	margin:0;
+}
+
+fieldset {
+	margin-top: 7px;
+	margin-bottom: 7px;
+	/*border: 1px solid #0b6a85;*/
+	/*background-color: #f9ffe2;*/
+   /*-moz-border-radius: 10px;*/
+	/*border: none;
+	border-top: 1px solid #a6bcf3;
+	border-bottom: 1px solid #a6bcf3;
+	background-color: #f5f8fe;*/
+	/*background: url(fieldset.gif) left bottom repeat-x;*/
+	/* von JQueryUI: */
+	border: 1px solid #dddddd; background: #f2f5f7 url(../jquery-ui/css/cupertino/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36;
+}
+
+fieldset legend {
+	/*font-size: 12pt;*/
+	font-weight: bold;
+	padding: 0 4px; 
+	/*margin-left: 15px;*/
+	color: #0b6a85;
+	/*background-color: #f9ffe2;*/
+	/*border: 1px solid #0b6a85;*/
+	/*border-bottom: 0px;*/
+	/*padding-left: 7px;
+	padding-right: 7px;*/
+   /*-moz-border-radius: 5px;*/
+}
+
+form label {
+	display: inline-block; line-height: 1.8; vertical-align: top; width: 120px;
+}
+form em { font-weight: bold; font-style: normal; color: #f00; font-size:xx-small; vertical-align:top; }
+
+legend, label {color: #333;}
+
+fieldset ol.divider { margin: 0; padding: 0; }
+fieldset ol.divider li { list-style: none; padding: 5px; margin: 0; }
+
+fieldset ol.divider li {
+	padding: 5px 10px 7px;
+	background: url(divider.gif) left bottom repeat-x;
+}
+
+fieldset fieldset { border: 1px solid darkblue; border-top-width: 0; border-right-width: 0; margin: 3px 0 0; background: none; background-color: #d9e7f1; }
+fieldset fieldset.unterset { border: none; margin: 3px 0 0; background: none; }
+fieldset fieldset legend { padding: 5px; }
+fieldset fieldset.unterset legend { padding: 0 0 5px; font-weight: normal; }
+fieldset fieldset label { width: auto; }
+fieldset fieldset.unterset label { display: block; width: auto; }
+
+fieldset em { font-weight: bold; font-style: normal; color: #f00; } 
+
+select, textarea, input { border: 1px solid #bbb; background-color: #f9fcfc; margin: 2px;}
+select:focus, input:focus, textarea:focus { border-color: #333;}
+/*button, input.button { border: 3px solid #ccdff5; border-right-color: #0d7e9e; border-bottom-color: #0d7e9e; background-color: #b8d0de; margin-right: 3px;}
+button:hover, input.button:hover { border-width: 2px; /*border: 2px solid #0d7e9e; border-right-color: #ccdff5; border-bottom-color: #ccdff5;*/ background-color: #a5c3d4; padding-top: 1px; padding-bottom: 1px; padding-left: 8px; margin-right: 3px;}*/
+button.mobile_button {
+   -webkit-border-image:url("../offline/images/navbutton.png") 0 5 0 5;
+   border-width:0 5px 0 5px;position:relative;margin:auto;
+   /*background-color: #5977a3;*/
+   padding: 0;
+   width: 90%;
+   height: 90%;
+}
+button.mobile_button img {
+   width:auto;height:22px;
+}
+/*button img { margin-top: 3px; margin-bottom: -3px; }
+input[disabled], input[readonly] {background-color: #ddd; }*/
+
+input.datepicker, #startdatum, #enddatum_text {
+	background: url(../icons/kalender_transparent.png) right center no-repeat;
+	background-color: white;
+}
+
+hr {
+	border-width: 0;
+	border-top: 1px dashed #0b6a85;
+	width: 96%;
+	height: 0px;
+	background-color: #fff
+}
+
+sub, sup {
+      line-height: 0px;
+/*      font-size: 60%;*/
+      font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: #057fa2;
+    text-decoration: none;
+    /*background: url(images/links.gif) no-repeat right 4px;
+    padding-right: 17px;*/
+}
+
+a.keine_lernbereiche, a.keine_lernbereiche:visited {
+	color: #aaa;
+}
+
+a:visited {
+    color: #057fa2;
+    text-decoration: none;
+}
+
+a:hover, a.keine_lernbereiche:hover {
+    color: #4ebcfb;
+    /*text-decoration: underline;*/
+}
+
+a.icon img {
+	heigth: 18px;
+	border-width: 0px;
+}
+
+a.icon:hover img {
+	margin-top: 1px;
+	margin-bottom: -1px;
+	margin-left: -1px;
+	margin-right: 1px;
+}
+
+a.bild_im_plan img {
+	border-width: 0px;
+}
+
+div.tab {
+	padding-left: 20px;
+    height: 33px;
+    border-bottom: solid 1px #001723;
+}
+
+div.tab a {
+    background-color: #4685a6; /*eef3f6;*/
+    border: solid 1px #001723; /*379; */
+    color: #020222; /*426976*/
+    float: left;
+    padding: 5px;
+	padding-top: 4px;
+	padding-bottom: 0px;
+    margin: 5px;
+    margin-right: 1px;
+    margin-bottom: 0px;
+	text-align: center;
+	vertical-align: middle;
+	width: 110px;
+	height: 23px;
+	-moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0;
+}
+
+div.tab a:hover, div.tab a.selected {
+	margin-top: 6px;
+    height: 22px;
+	background-color: #4da0ca;
+	border-bottom: solid 1px #4da0ca;
+	border-right-width: 3px;
+	margin-left: 3px;
+}
+
+div.tab_2 {
+	padding-left: 20px;
+	background-color: #4da0ca;
+    height: 40px;
+	border-bottom: 1px solid #003f5f;
+}
+
+div.tab_2 a {
+    background-color: #64b6d9;
+    color: #020222;   
+    float: left;
+    margin: 3px;
+	margin-top: 11px;
+    margin-bottom: 0px;
+	border: 1px solid #003f5f;
+	padding-top: 5px;
+	padding-right: 7px;
+	padding-left: 7px;
+	height: 23px;
+	-moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0;
+}
+
+div.tab a img, div.tab_2 a img, div.tab_3 a img, div.navigation_3 a img {
+	border-width: 0px;
+	margin-top: -3px;
+	vertical-align: middle;
+}
+
+div.tab_2 a:hover, div.tab_2 a.selected {
+	margin-top: 12px;
+    height: 22px;
+	background-color: #77c3dc; /*aad3ea;*/
+	border-bottom: solid 1px #77c3dc;
+	border-right-width: 3px;
+	margin-left: 1px;
+}
+
+div.tab_3 {
+	padding-left: 20px;
+    height: 40px;
+    border-bottom: 1px solid #00547f;
+	background-color: #77c3dc;
+}
+
+div.tab_3 a {
+    background-color: #afe1fa; /*7ebce0;*/
+    color: #020222;   
+    float: left;
+    margin: 3px;
+	margin-top: 11px;
+    margin-bottom: 0px;
+	border: 1px solid #00547f;
+	padding-top: 5px;
+	padding-right: 7px;
+	padding-left: 7px;
+	height: 23px;
+	-moz-border-radius: 5px 5px 0 0; -webkit-border-radius: 5px 5px 0 0; border-radius: 5px 5px 0 0;
+}
+
+div.tab_3 a span, div.tab_2 a span {
+	-moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; padding: 1px; 
+}
+
+div.tab_3 a:hover, div.tab_3 a.selected {
+	margin-top: 12px;
+    height: 22px;
+	background-color: #bee7fb; /*52a3ba*/
+	border-bottom: solid 1px #bee7fb;
+	border-right-width: 3px;
+	margin-left: 1px;
+}
+
+div.navigation, div.navigation_2, div.navigation_3 {
+	color: #020222;
+	border: solid 1px #00547f;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	padding:3px;
+	padding-right: 60px;
+	height: 18px;
+	text-align: right;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+div.navigation {
+	padding-right: 95px;
+}
+
+div.navigation_3 a.auswahl, div.navigation_3 a.selected {
+    float: left;
+    color: #020222; /*034870; */
+    margin: 0px;
+    margin-bottom: 0px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding-top: 0px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 1px;
+	/*height: 18px;*/
+	-moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px;
+	/*border-right: 2px solid #0b6a85;*/
+}
+div.navigation_3 a.auswahl:hover, div.navigation_3 a.selected {
+   background-color: #cbffff;
+}
+
+div.navigation {
+	background-color: #4da0ca;
+}
+
+div.navigation_2 {
+	background-color: #77c3dc;
+}
+
+div.navigation_3 {
+	background-color: #bee7fb;
+}
+
+div.inhalt {
+	border: solid 1px #00547f;
+	padding: 12px;
+	background-color: #fafcfe; /*f9fff2*/
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	-moz-border-radius: 0 0 10px 10px; -webkit-border-radius: 0 0 10px 10px; border-radius: 0 0 10px 10px;
+}
+
+.r {float:right; margin:0; padding:0;}
+#mf {background-color:#8c8c8c; height:1.4em; padding-right:1em; clear:left;}
+@media print {#mf {display:none;}}
+#mf li {display:inline;margin-left:1em;}
+#mf a {padding-left:23px;font-size:0.9em;color:#fff;}
+#mf #pv {background:url(../icons/drucken.png) no-repeat left center;}
+#mf #mfc {background:url(../icons/pfeil_links.png) left center no-repeat;}
+	
+div.beschreibung {
+   margin: 5px;
+   width: 120px;
+   float: left;
+   clear: both;
+}
+
+span.hinweis, div.hinweis {
+	background: url(../icons/hinweis.png) no-repeat 4px 6px;
+	opacity: .60;filter:Alpha(Opacity=60); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px;
+	margin: -7px 0 0 0px; padding: 7px;
+	padding-left: 25px;
+	border: solid #f9dd34 1px;
+	background-color: #ffef8f;
+	color: #363636;
+	font-size: 9pt;
+}
+
+span.hinweis img, div.hinweis img {
+	vertical-align: middle;
+}
+
+div.lb_kommentare {
+	border-left: solid 2px #ADD8E6;
+	color: #1E90FF;
+	font-size: 9pt;
+	padding-left: 10px;
+}
+
+div.lb_kommentare a img {
+	float: right;
+}
+
+@media print {div.lb_kommentare a img {display:none;}}
+
+.edit_things {
+	background-color: lightblue;
+	padding: 3px;
+	//margin-top: 50px;
+	border: solid blue 1px;
+}
+
+.tooltip{
+	position: absolute;
+    display:none;
+    border: 1px solid #00547f;
+    padding: 8px;
+    width: 400px;
+    background-color: #fcfeff;
+}
+
+/*pre {
+	border-left: 2px solid #564B47;
+	background-color: #E8EFF7;
+	padding-left: 7px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+code {
+	color: #564B47;
+}*/
+
+div.drag_liste {
+	color: #777;
+	width: 47%;
+	position: fixed;
+	top: 88px; /*169px;*/
+	right: 20px;
+	bottom: 15px;
+}
+
+div.drag_liste ul {
+	/*overflow: auto;*/
+	position: relative;
+	padding: 5px;
+	height: 600px;
+	list-style-type:none;
+}
+
+div.drag_liste ol {
+	list-style-type:none;
+	padding-left: 20px;
+}
+
+div.drag_liste ol li {
+	border: 1px solid gray;
+	background-color: blue;
+	border: 1px solid #aed0ea; background-color: #d7ebf9; font-weight: normal; color: #2779aa;
+	opacity: .7; filter:Alpha(Opacity=70);
+	margin: 2px;
+}
+
+div.drop_block {
+	width: 90%;
+	float: left;
+	border: 1px solid gray;
+	background-color: #fcfcfc;
+}	
+
+div.drop_block p {
+	margin: 2px;
+	color: gray;
+	text-align: center;
+}	
+
+#drag_fk, div.drag_liste ol li {
+	cursor: move;
+}
+
+table, tabelle2 {
+   border-collapse: collapse;
+}   
+
+table.tabelle table.tabelle2 {
+   border: black solid 0px;
+}
+
+table.tabelle tr td, table.tabelle tr th {
+   border: gray dotted 1px;
+   border-top-width: 0px;
+   border-left-width: 0px;
+   padding: 4px;
+}
+table.tabelle2 tr td, table.tabelle2 tr th {
+   border: black solid 1px;
+   border-top-width: 0px;
+   border-left-width: 0px;
+   padding: 4px;
+}
+
+/* Stundenplan */
+table.stundenplan {
+   border: #578f9e dashed 2px;
+   -moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px;
+   background-color: #dce9f8;
+}
+
+table.stundenplan tr td, table.stundenplan tr th {
+   border: #578f9e solid 1px;
+   padding: 4px;
+   text-align: center;
+}
+
+table.stundenplan tr td {
+	vertical-align: top;
+}
+
+table.stundenplan tr td.mittig {
+	vertical-align: middle;
+}
+
+table.stundenplan tr td div, #drag_fk {
+	text-align: center;
+	padding: 2px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	-moz-border-radius: 7px; -webkit-border-radius: 7px; border-radius: 7px;
+}
+
+table.stundenplan tr td div.aufsicht {
+	background-color: white;
+	font-size: xx-small;
+	padding: 1px;
+	-moz-border-radius: 2px; -webkit-border-radius: 2px; border-radius: 2px;
+}
+
+table.stundenplan tr td br.aufsicht {
+	clear: both;
+}
+
+/*@media print {
+	table.stundenplan tr td div.aufsicht, table.stundenplan tr td br.aufsicht {
+		display: none;
+	}
+}*/
+
+/* Kalender */
+td.a_woche {
+	background-color: #ffeecd;
+	text-align: right;
+}
+
+td.b_woche {
+	background-color: #feffc2;
+	text-align: right;
+}
+
+td.monat_1 {
+	background-color: #bfecfb;
+}
+
+td.monat_2 {
+	background-color: #dfeef3;
+}
+
+/* Klassenbuchansicht */
+table.klassenbuch {
+	border: 1px solid black;
+	border-right-width: 2px;
+	border-top-width: 2px;
+	font-size: 8pt;
+}
+table.klassenbuch tr th {
+	border-left: 1px solid black;
+	border-bottom: 2px solid black;
+	font-weight: normal;
+	height: 1cm;
+}
+table.klassenbuch tr td {
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+	height: 0.731cm;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+/* Fehlzeitenansicht */
+	table.fehlzeiten {
+		text-align:center;
+		border: 0.2mm solid black;
+		border-right-width: 0.6mm;
+		border-top-width: 0.6mm;
+		font-size: 8pt;
+		width: 17.5cm;
+	}
+	table.fehlzeiten tr th {
+		border-left: 0.4mm solid black;
+		border-bottom: 0.4mm solid black;
+		font-weight: normal;
+		font-size: 8px;
+	}
+	table.fehlzeiten tr td {
+		border: 0 solid black;
+		border-bottom-width: 0.2mm;
+		border-left-width: 0.2mm;
+		height: 0.7cm;
+	}
+	td.nummer {
+		font-size: 6pt;
+		height: 0.4cm;
+		width: 0.4cm;
+	}
+
+/* Notizen */
+table.notizen tr td {
+	vertical-align: top;
+}
+
+/* Tests - Druckansicht */
+/* wird glaub gar nicht verwendet */
+table.test_tabelle {
+	border: black solid 0px;
+}
+
+table.test_tabelle tr td, table.test_tabelle tr th {
+	border: black solid 1px;
+	border-top-width: 0px;
+	border-left-width: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 15px;
+	padding-left: 15px;
+	height: 25px;
+}
+
+img.kariert, img.millimeter {
+	border-width: 0; vertical-align:text-bottom; width: 15cm;
+}
+
+@media print {
+	img.kariert {
+		width:15cm; height: 20cm; /*0.503cm;*/
+	}
+	img.millimeter {
+		width:15cm; height: 20cm;
+	}
+}
+
+ul.statistik_fach_klassen li {
+	float: left; margin-left: 25px; padding: 3px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+}
+
+span.grade_on_wrong_side {
+    padding-left: 2px; padding-right: 2px; background-color: pink; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+}
+
+/* Fundus */
+li.lehrplan {
+	background-color: #FFFFBF;
+	clear: both;
+}
+
+li.unterrichtseinheit {
+	background-color: #FFFFDF;
+	clear: both;
+}
+
+li.block {
+	background-color: #FFFFEF;
+	clear: both;
+}
+
+li.over, td.over {
+	background-color: lightblue;
+}
+
+div.aktionen_menue {
+	visibility: hidden; /*width:180px; height:20px; position:relative; overflow:hidden; top:0px; left:25px;*/
+	border:1px solid lightblue;
+	background-color:white;
+	float: right;
+	padding: 1px;
+	margin-left: 3px;
+}
+
+span.aktionen_block {
+	visibility: hidden; /*width:180px; height:20px; position:relative; overflow:hidden; top:0px; left:25px;*/
+	padding: 1px;
+	margin-left: 3px;
+}
+
+/* Unterrichtsstunde */
+table.einzelstunde, p.einzelstunde {
+	background-color: #fdfdd8;
+}
+
+table.einzelstunde tr th, table.einzelstunde tr td {
+   border: #ddd solid 1px;
+   padding: 4px;
+}
+
+/* Unterrichtsdurchfuehrung */
+span.lehrbuch {
+	color: brown;
+}
+
+span.ueberschrift {
+	font-weight: bold; font-size: 12pt; color: green;
+}
+
+span.aufgabe_bsp {
+	font-weight: bold;
+}
+
+span.aufgabentext {
+	color: black;
+}
+
+span.aufgabe_lsg {
+	font-weight: bold;
+	color: gray;
+}
+
+span.loesungstext {
+	color: gray;
+}
+
+span.aufgabenbemerkung {
+	color: blue;
+}
+
+span.erlaeuterung_vorher, span.diskussion_vorher {
+	text-decoration:underline; color: lightblue; font-weight: bold;
+}
+span.erlaeuterung, span.diskussion, span.merke, span.definition, span.umrandet, span.sonstiges, span.beschreibung {
+	color: black;
+}
+code.feste_zeichenbreite {
+	color: black;
+}
+
+span.merke_vorher, span.definition_vorher {
+	text-decoration:underline; color: brown; font-weight: bold;
+}
+
+span.beschreibung_vorher {
+	text-decoration:underline; color: blue; font-weight: bold;
+}
+
+@media print {
+	body { margin: 0; background: #fff; min-width: 0; font-size: 9pt;}
+	div.tab, div.tab_2, div.tab_3, div.navigation, div.navigation_2, div.navigation_3, span.nicht_drucken, div.nicht_drucken, th.nicht_drucken, td.nicht_drucken, img.programm, div.logo { display:none; }
+	div.inhalt {border: 0; background-color: #fff; margin: 0px; padding: 0px; }
+	a { color: #000000;}
+	table.stundenplan tr td div { border: 1px solid lightgray; }
+	table.stundenplan tr td div div { border-width: 0; }
+	a.icon {display:none;}
+	table.einzelstunde, p.einzelstunde { background-color: #fff;}
+}
+
+
+#new_section_add_content_span label, {
+	height: 30px;
+}
+#new_section_add_content_span label img, #new_section_toolbar_span img {
+	float: left; padding-right: 5px;
+}

@@ -1,0 +1,124 @@
+.mlmenu {
+/*	margin-left: 10px;
+	margin-right: 10px;*/
+	margin-bottom: 53px;
+}
+
+.mlmenu ul .hideonload {
+	display: none;
+}
+		/*this is the css for the horizontal version*/
+		.horizontal ul{
+			list-style-type: none;
+			padding: 0px;
+			padding-left: 12px;
+			/*border-radius: 10px 10px 0 0;*/
+			display: block;
+			height: 29px;
+		}
+		.horizontal ul ul {
+			border-radius: 0 0 4px 4px;
+			padding-bottom: 3px;
+			padding-left: 0px;
+		}
+		.horizontal li{
+			float: left;
+			display: inline;
+		}
+		.horizontal li a{
+			text-decoration: none;
+			/*height: 2.0em;*/
+			float: left;
+			display: block;
+			width: auto;
+			padding: 2px;
+			margin-top: 3px;
+			padding-left: 10px;
+			padding-right: 10px;
+			border: 1px solid;
+			border-left: none;
+		}
+		.horizontal li li a{
+			border-top: none;
+			padding-right: 13px;
+			/*border-left: 1px solid;*/
+		}
+		.horizontal li ul{
+			position: absolute; 
+			margin-top: 2.2em;
+			margin-left: 0px;
+			width: 229px;
+			border: none;
+			display: block;
+			height: auto;
+			border-top: 1px solid;
+		}
+		.horizontal li li ul{
+			position: absolute;
+			margin-top: .0em;
+			margin-left: 227px;
+		}
+		.horizontal li ul li a{
+			width: 200px;
+		}
+		.horizontal span.vert {
+			float: right;
+			padding-right: 3px;
+		}
+		/*This section makes the menu not work in non-javascript enabled browsers by not showing the menu by default-This can be worked around by making top level links point to a sitemap*/
+		/*Not sure if I recommend this or not*/
+		.inaccesible li ul{
+			display: none;
+		}
+		/*Arrow code - looks like <a class="haschild" href="#">Text <span>Arrow</span></a> can be turned on/off with arrow class*/
+		.arrow a span.vert {
+		padding-left: 1em;
+		font-size: 85%;
+		}
+		.arrow a:hover span.vert {
+		/*padding-left: 2em;*/
+		}
+		.arrow a span.noshow{
+			visibility: hidden;
+		}
+		/*Plus code*/
+		.plus a span.vert {
+			padding-left: .5em;
+		}
+		/*colors for menu*/
+		.bluewhite ul{
+			border: 1px solid #AED0EA;
+			border-left-width: 0px;
+			border-right-width: 0px;
+			background: url('ui-bg_highlight-soft_100_deedf7_1x100.png') repeat-x scroll 50% 50% #DEEDF7;
+		}
+		.bluewhite ul ul{
+			border: 1px solid #ddd; /*00547f;*/
+			border-right-width: 2px;
+			border-bottom-width: 2px;
+			border-top: 1px solid #CCC;
+			background: url('ui-bg_highlight-hard_100_f2f5f7_1x100.png') repeat-x scroll 50% top #F2F5F7;
+		}
+		.bluewhite ul ul ul {
+			border-top: 1px solid #ddd;
+			border-radius: 4px;
+		}
+		.bluewhite li a{
+			color: #222;
+			border-width: 0px;
+			/*padding: 2px 0.4em;*/
+			font-weight: normal;
+			margin-left: 3px;
+			margin-right: 3px;
+			outline: medium none;
+		}
+		.bluewhite li a:hover{
+			background: url('ui-bg_glass_100_e4f1fb_1x400.png') repeat-x scroll 50% 50% top #E4F1FB;
+			border: 1px solid #74B2E2;
+			color: #0070A3;
+			margin-left: 2px;
+			margin-right: 2px;
+			margin-top: 2px;
+			margin-bottom: -1px;
+			border-radius: 5px 5px 5px 5px;
+		}

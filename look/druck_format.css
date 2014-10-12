@@ -1,0 +1,205 @@
+body {
+    background-color: #ffffff;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+}
+
+pre {
+	padding:0;
+	margin:0;
+}
+
+a {
+    color: #f68121;
+    text-decoration: none;
+    /*background: url(images/links.gif) no-repeat right 4px;
+    padding-right: 17px;*/
+}
+
+a:visited {
+    color: #f68121;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #438e2b;
+    /*text-decoration: underline;*/
+}
+
+a.icon img {
+	heigth: 20px;
+	border-width: 0px;
+}
+
+div.tab {
+	padding-left: 50px;
+    height: 33px;
+    border-bottom: solid 1px #8eadbd;
+}
+
+div.tab a {
+    background-color: #eef3f6;
+    border: solid 1px #8eadbd;   
+    color: #426976;
+    float: left;
+    padding: 5px;
+    margin: 5px;
+    margin-right: 12px;
+    margin-bottom: 0px;
+	width: 107px;
+	text-align: center;
+}
+
+div.tab a:hover, div.tab a.selected {
+   background-color: #dfe7f0;
+   border: solid 1px #8eadbd;
+   border-bottom: solid 1px #dfe7f0;
+}
+
+div.tab_2 {
+	padding-left: 20px;
+	background-color: #dfe7f0;
+    height: 40px;
+	border-bottom: 1px solid #8eadbd;
+}
+
+div.tab_2 a {
+    background-color: #ccdff5;
+    color: #426976;   
+    float: left;
+    margin: 3px;
+	margin-top: 13px;
+    margin-bottom: 0px;
+	border: 1px solid #8eadbd;
+	padding-top: 3px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 6px;
+}
+
+div.tab_2 a:hover, div.tab_2 a.selected {
+   background-color: #e9f4da;
+   border-bottom: solid 1px #e9f4da;
+}
+
+div.tab_3 {
+	padding-left: 30px;
+    height: 40px;
+    border-bottom: 1px solid #70af05;
+	background-color: #e9f4da;
+}
+
+div.tab_3 a {
+    background-color: #e0f4ba;
+    color: #558407;   
+    float: left;
+    margin: 3px;
+	margin-top: 13px;
+    margin-bottom: 0px;
+	border: 1px solid #70af05;
+	padding-top: 3px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 6px;
+}
+
+div.tab_3 a:hover, div.tab_3 a.selected {
+   background-color: #cae4a7;
+   border-bottom: solid 1px #cae4a7;
+}
+
+div.navigation, div.navigation_2, div.navigation_3 {
+	border: solid 1px #70af05;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	padding:3px;
+	text-align: right;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+div.navigation_3 a {
+    float: left;
+    color: #558407;   
+    margin: 0px;
+    margin-bottom: 0px;
+	border-right: 2px solid #70af05;
+	padding-top: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 1px;
+}
+div.navigation_3 a:hover, div.navigation_3 a.selected {
+   background-color: #eaf4a7;
+}
+
+div.navigation {
+	background-color: #dfe7f0;
+}
+
+div.navigation_2 {
+	background-color: #e9f4da;
+}
+
+div.navigation_3 {
+	background-color: #cae4a7;
+}
+
+div.inhalt {
+	border: solid 1px #70af05;
+	padding: 12px;
+	background-color: #f9fff2;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+
+div.beschreibung {
+   margin: 5px;
+   width: 120px;
+   float: left;
+   clear: both;
+}
+
+table.stundenplan {
+   border: #d1a solid 2px;
+}
+
+table.stundenplan tr td, table.stundenplan tr th {
+   border: #ad1 solid 1px;
+   padding: 4px;
+   text-align: center;
+}
+table.stundenplan tr td div {
+	padding: 2px;
+}
+table.tabelle {
+   border: black solid 0px;
+}
+
+table.tabelle tr td, table.tabelle tr th {
+   border: black solid 2px;
+   border-top-width: 0px;
+   border-left-width: 0px;
+   padding: 4px;
+}
+
+table.test_tabelle {
+   border: black solid 0px;
+}
+
+table.test_tabelle tr td, table.test_tabelle tr th {
+   border: black solid 1px;
+   border-top-width: 0px;
+   border-left-width: 0px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   padding-right: 15px;
+   padding-left: 15px;
+}
+
+table.einzelstunde tr th, table.einzelstunde tr td {
+   border: #ddd solid 1px;
+   padding: 4px;
+}

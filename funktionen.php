@@ -916,7 +916,7 @@ class db
     // del_array2echo(delete_db_object("abschnittsplanung", array(85), $pfad, false), "sql");
     // del_array2echo(delete_db_object("themenzuordnung", array("all", "all", 50), $pfad, false), "info");
     
-	function del_array2echo ($del_array, $modus) {
+	function del_array2echo ($del_array, $modus) { // gibt entweder array oder Informationen zurueck, was geloescht wird
         $return='';
 		//echo $del_array;
         //print_r($del_array);
@@ -998,18 +998,18 @@ class db
         return ($rom);
     }
     
-    function datum_strich_zu_punkt ($datum) {
+    function datum_strich_zu_punkt ($datum) { // 2014-05-21 -> 21.5.2014
         $hilf = explode('-',$datum);
         if (isset($hilf[1])) return $hilf[2].'.'.$hilf[1].'.'.$hilf[0];
         else return $datum;
     }
     
-    function datum_zu_woche ($datum) {
+    function datum_zu_woche ($datum) { // SQL-Datum zu Wochenzahl
         $hilf = explode('-',$datum);
         return date("W",mktime(1,0,0,(int) $hilf[1],(int) $hilf[2],(int) $hilf[0]));
     }
     
-    function datum_strich_zu_wochentag($datum, $art) {
+    function datum_strich_zu_wochentag($datum, $art) { // falls SQL-Datum, wird So bzw. Sonntag zurueckgegeben
         $hilf = explode('-',$datum);
         if (isset($hilf[1])) {
             $wochennamen_kurz=array(0=>'Sonntag', 1=>'Montag', 2=>'Dienstag', 3=>'Mittwoch', 4=>'Donnerstag', 5=>'Freitag', 6=>'Samstag');
@@ -1022,7 +1022,7 @@ class db
 			return $datum;
     }
     
-    function datum_strich_zu_punkt_uebersichtlich ($datum, $wochentag, $jahresangabe) {
+    function datum_strich_zu_punkt_uebersichtlich ($datum, $wochentag, $jahresangabe) { // 2014-05-21 -> Mo, 21.5.[14]
         $return='';
         if ($wochentag=="wochentag_kurz")
         	  $return.=datum_strich_zu_wochentag($datum, "kurzform").' ';
@@ -1035,11 +1035,11 @@ class db
         return $return;
     }
     
-    function zeit_formatieren ($zeit) {
+    function zeit_formatieren ($zeit) { // 7:30 -> 07^(30) (mit HTML)
         return (substr($zeit,0,2)+0).'&thinsp;<sup style="text-decoration: underline; font-size: 7pt;">'.substr($zeit,3,2).'</sup>';
     }
 
-    function datum_punkt_zu_strich ($datum) {
+    function datum_punkt_zu_strich ($datum) { // 21.05.14 -> 2014-05-21
         $hilf = explode('.',$datum);
         if (isset($hilf[1])) {
             if ($hilf[0]<10) $hilf[0]='0'.($hilf[0]+0);
@@ -1050,25 +1050,25 @@ class db
         else return $datum;
     }
     
-    function kommazahl ($input) {
+    function kommazahl ($input) { // ersetzt . mit ,
         $output=str_replace(".", ",", ($input+0));
         //if (floor($input)==$input)
         return $output;
     }
     
-    function punkt_statt_komma_zahl ($input) {
+    function punkt_statt_komma_zahl ($input) { // ersetzt , mit .
         $output=str_replace(",", ".", $input)+0;
         return $output;
     }
     
-    function isdate($input) {
+    function isdate($input) { // bool; SQL-Datumsformat
 		if (strlen($input)==10 and preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $input))
 			return true;
 		else
 			return false;
 	}
 	
-	function injaway ($input) {
+	function injaway ($input) { // falls $input kein datum ist, wird eine Zahl von mysqli_real_escape_string($input) gebildet
 		$db=db_connect();
 		if (isdate($input))
 			return $input;
@@ -1083,14 +1083,15 @@ class db
         else return "'".mysqli_real_escape_string($db, trim($text))."'";
     }
     
-    function leer_NULL ($zahl) {
+    function leer_NULL ($zahl) { // verwendet injaway()
         if ($zahl=="") return "NULL";
         else return injaway($zahl);
     }
 	
     // wird von iconv benoetigt
     setlocale(LC_CTYPE, 'de_DE.UTF-8');
-	function pictureOfPupil ($surname, $forename, $number, $username, $path, $options) {
+    
+	function pictureOfPupil ($surname, $forename, $number, $username, $path, $options) { // erzeugt <img...> falls Datei existiert
 		$filename='';
 		if (empty($username)) {
 			$forename_ascii=iconv("ISO-8859-1", "ASCII//TRANSLIT", $forename);
@@ -1320,7 +1321,7 @@ class db
 	}
 	
     // ---------------- Zip-Funktionen --------------------------
-    function unzip($zipfile)
+    function unzip($zipfile) // Dateien zippen war mal geplant - ist aber noch unvollstaendig...
     {
         $zip = zip_open($zipfile);
         while ($zip_entry = zip_read($zip))    {
@@ -1366,6 +1367,7 @@ class db
 		return $sj_id["id"];
 	}
 	
+	// FTP-Backup-Funktion (einzelne Dateien - auch Loeschen)
 	function handle_backedup_files($conn_id, $ftp_data_path, $pfad, $grundpfad, $lb, $id, $url, $hashes_on_server, $hash_i) {
 		$pfadebenen=lernbereich2pfadebenen($lb);
 		$active_hash=md5_file($pfad."daten/".$pfadebenen[0]."/".$pfadebenen[1]."/".$pfadebenen[2]."/".$url);
@@ -1395,6 +1397,7 @@ class db
 		return array($id.";".$pfadebenen[0]."/".$pfadebenen[1]."/".$pfadebenen[2]."/".$url.";".$active_hash."\n", $hash_i);
 	}
 	
+	// erstellt ftp-Verzeichnisse und laedt eine Datei an den angegebenen Ort; echo Fehlermeldungen
 	function pfad_und_datei_ftpupload($conn_id,$ftp_path,$pfad,$grundpfad,$pfadebenen,$url) {
 		if (ftp_mkdir ($conn_id, $ftp_path.'/'.$grundpfad.'/'.$pfadebenen[0]) !== FALSE)
 				echo '';
@@ -1415,6 +1418,7 @@ class db
 				echo 'Der Upload war NICHT erfolgreich!<br />';
 	}
 	
+	// array[faecherkuerzel, schulartkuerzel, klassenstufe] (fuer Pfadangaben)
 	function lernbereich2pfadebenen($lb) {
 		$result=db_conn_and_sql ( 'SELECT faecher.kuerzel AS f_kuerzel, schulart.kuerzel AS s_kuerzel, lernbereich.klassenstufe
                        FROM `lernbereich`,`lehrplan`,`schulart`,`faecher`
@@ -1429,7 +1433,8 @@ class db
 		$ebene3=$row["klassenstufe"];
 		return array($ebene1, $ebene2, $ebene3);
 	}
-
+	
+	// erstellt Grafiken/Dateien in Abhaengigkeit des Lernbereichs und gibt ein array mit pfad und dateinamen zurueck; benoetigt lernbereich2pfadebenen()
 	function pfad_und_dateiname($lernbereich, $typ, $orginaldateiname,$tempname, $pfad="../") {
         if (!isset($pfad))
             $pfad='../';
@@ -1522,11 +1527,11 @@ class db
         }
     }
     
-    function modulo($zahl1, $zahl2) {
+    function modulo($zahl1, $zahl2) { // nicht im Standardumfang von PHP (irgendeiner Version)
         return round((($zahl1/$zahl2)-floor($zahl1/$zahl2))*$zahl2);
     }
     
-    function ostern ($schuljahr) {
+    function ostern ($schuljahr) { // mktime; Ostern-Datum; benoetigt modulo
         $a=modulo($schuljahr,19);
         $b=round($schuljahr / 100);
         $c=modulo($schuljahr,100);
@@ -1545,6 +1550,7 @@ class db
         return mktime(0,0,0,$n,$date,$schuljahr);
     }
     
+    // array; falls die Schule den Feiertag (z.B. Ostermontag) aktiviert hat, wird dieser mit Datum zurueckgegeben; benoetigt ostern()
     function besondere_tage($schuljahr, $schule) {
 		// buss und bettag
         $bubt=mktime(0,0,0,11,22,$schuljahr);
@@ -1581,6 +1587,7 @@ class db
         return $tag;
     }
 	
+	// weil Ferientermine unguenstig angegeben werden
 	function naechster_wochentag_von_strichdatum($strichdatum) {
 		$elemente=explode("-",$strichdatum);
 		$nextdate=mktime(0,0,0, $elemente[1] , $elemente[2] , $elemente[0] )+3600*24;
@@ -1590,6 +1597,7 @@ class db
 		return date("Y-m-d", $nextdate);
 	}
 	
+	// gibt SQL-Datum des Schuljahresbeginns und -endes zurueck
 	function schuljahr_start_ende($jahr, $schule) {
         $start_ende_result=db_conn_and_sql("SELECT beginn, ende FROM ferien, schule
 			WHERE schule.id=".$schule."
@@ -1603,7 +1611,7 @@ class db
 		return array("start"=>$start["ende"], "ende"=>$ende["beginn"]);
 	}
 	
-    function schuljahr_uebersicht($schuljahr,$schule) {
+    function schuljahr_uebersicht($schuljahr,$schule) { // array; Vorbereitung fuer Stoffverteilungsplan; benoetigt besondere_tage()
 		$bundesland=sql_result(db_conn_and_sql("SELECT bundesland FROM schule WHERE id=".$schule),0,"bundesland");
 		
         $feriennamen=array('Herbst','Weihnachts','Winter','Oster','Pfingst','Pfingst');
@@ -1699,7 +1707,7 @@ class db
         return $wochentage;  
     }
     
-	function gehoert_zur_gruppe($fach_klasse, $schueler) {
+	function gehoert_zur_gruppe($fach_klasse, $schueler) { // bool; Schueler gehoert zur Gruppe oder (falls nicht), ist in seiner Klasse enthalten?
 		$schueler = db_conn_and_sql ('SELECT `schueler`.`id`
 				FROM `schueler`,`gruppe`
 				WHERE `gruppe`.`schueler`=`schueler`.`id`
@@ -1715,7 +1723,7 @@ class db
 			return 0;
 	}
 	
-	function schueler_von_fachklasse($fach_klasse) {
+	function schueler_von_fachklasse($fach_klasse) { // SQL-Result; alle Schueler einer Fachklasse (ob in Gruppen angeordnet oder als Klasse)
             $schueler = db_conn_and_sql("SELECT schueler.*
                 FROM schueler, gruppe
                 WHERE gruppe.fach_klasse=".$fach_klasse."
@@ -1878,6 +1886,7 @@ class db
 		return $schueler_grundlagen_hier;
 	}
 	
+	// array; vorbereitung fuer Notenuebersicht einer Fachklasse; auch fuer Teststatistik; und derzeit noch fuer Eltern/Lehreransicht eines Schuelers
 	function noten_von_fachklasse ($fach_klasse, $aktuelles_jahr) { // , $neu_berechnen=true
 		//$startzeit=microtime(true); // DEL
 			$fach_klasse=injaway($fach_klasse);
@@ -2032,7 +2041,7 @@ class db
 					$beschreibung[$i]['gesamtpunktzahl']   = $test_pkt_gruppe["A"];
 					$beschreibung[$i]['gesamtpunktzahl_b'] = $test_pkt_gruppe["B"];
 				}
-				if ($neu_berechnen) {
+				//if ($neu_berechnen) {
 					$schnitt=db_conn_and_sql("SELECT `noten`.`wert`, SUM(`noten`.`mitzaehlen`) AS `anzahl`
 						FROM `noten`
 						WHERE `noten`.`beschreibung`=".$notenspalte["id"]."
@@ -2064,14 +2073,14 @@ class db
 						db_conn_and_sql("UPDATE notenbeschreibung SET durchschnitt=".$mal_zahl/$schueler_anzahl.", notenspiegel=".apostroph_bei_bedarf(implode("|",$notenspiegel_array))." WHERE id=".$notenspalte["id"]);
 					else
 						db_conn_and_sql("UPDATE notenbeschreibung SET durchschnitt=NULL, notenspiegel=NULL WHERE id=".$notenspalte["id"]);
-				}
-				else { // notenspiegel und durchschnitt aus DB-Tabelle laden
-					$beschreibung[$i]['notenspiegel']=array();
-					$beschreibung[$i]['durchschnitt']=$notenspalte["durchschnitt"];
-					$spiegelspalte=explode("|",$notenspalte["notenspiegel"]);
-					foreach ($spiegelspalte as $ssp)
-						$beschreibung[$i]['notenspiegel'][$ssp[0]]=array('note'=>$ssp[0],'punkte_bis'=>$ssp[1],'anzahl_schueler'=>$ssp[2]);
-				}
+				//}
+				//else { // notenspiegel und durchschnitt aus DB-Tabelle laden
+				//	$beschreibung[$i]['notenspiegel']=array();
+				//	$beschreibung[$i]['durchschnitt']=$notenspalte["durchschnitt"];
+				//	$spiegelspalte=explode("|",$notenspalte["notenspiegel"]);
+				//	foreach ($spiegelspalte as $ssp)
+				//		$beschreibung[$i]['notenspiegel'][$ssp[0]]=array('note'=>$ssp[0],'punkte_bis'=>$ssp[1],'anzahl_schueler'=>$ssp[2]);
+				//}
 				$i++;
 			}
 			//echo "Dauer Schuelerzuordnung: ".(microtime(true)-$startzeit)." sec<br />"; // DEL
@@ -2254,6 +2263,7 @@ function notenhash_von_fach_klasse($fach_klasse, $schuljahr, $schreiben=false) {
 		return array(true, false); // passed, wegen zu weniger Zensuren
 }
 
+// array; vorbereitung fuer Stoffverteilungsplan; Lehrstoffplanung; wird auch bei Einzelstundenplanung verwendet; benoetigt schuljahr_uebersicht
 function fachklassen_zeitplanung($fachklasse,$jahr) {
 	$wochenstunden_result=db_conn_and_sql("SELECT *
 		FROM `stundenplan`,`stundenzeiten`,`fach_klasse`,`klasse`
@@ -2492,6 +2502,7 @@ function fachklassen_zeitplanung($fachklasse,$jahr) {
 	return $eintraege;
 }
 
+// html; sehr umfangreich - wandelt die Syntax, welche in Texten, Aufgaben, ... verwendet wird in HTML um
 function syntax_zu_html($text, $teilaufgaben_nebeneinander=1, $modus=0, $pfad='./', $aufgabengruppe='A') {
     // text: in HTML umzuwandelnder text
     // teilaufgaben_nebeneinander: bei 1), a), A) und I) werden mehrere Aufteilungen moeglich
@@ -2866,7 +2877,7 @@ function syntax_zu_html($text, $teilaufgaben_nebeneinander=1, $modus=0, $pfad='.
 }
 
 // -------------------------- wiederkehrende Formular-Elemente --------------------------------
-	function bewertungstabelle_select($fach_klasse_auswahl) {
+	function bewertungstabelle_select($fach_klasse_auswahl) { // html; eigene Bewertungstabellen und die der Schule ohne <select>
 		$inhalt="";
 		$benutzte_bewertungstabelle=sql_result(db_conn_and_sql("SELECT fach_klasse.bewertungstabelle
 			FROM fach_klasse
@@ -2890,7 +2901,7 @@ function syntax_zu_html($text, $teilaufgaben_nebeneinander=1, $modus=0, $pfad='.
 		return $inhalt;
 	}
 	
-	function notenberechnungsvorlagen_select($fach_klasse_auswahl, $deaktivieren) {
+	function notenberechnungsvorlagen_select($fach_klasse_auswahl, $deaktivieren) { // html; eigene Vorlagen und die der Schule ohne <select>
 		$inhalt="";
 		$benutzte_vorlage_result=db_conn_and_sql("SELECT *
 			FROM fach_klasse
@@ -2943,7 +2954,7 @@ function syntax_zu_html($text, $teilaufgaben_nebeneinander=1, $modus=0, $pfad='.
 
 
 // -------------------------- FORMULARE -------------------------------------------------------
-function themen_auswahl($pfad, $name, $selected_tags) {
+function themen_auswahl($pfad, $name, $selected_tags) { // html; Thema 1-10 mit <label> und <select>; nutzt $db->themenoptions
 	$db = new db();
 	$nicht_anzeigen=false;
 	$inhalt='<label for="'.$name.'_0"><img src="'.$pfad.'icons/thema.png" alt="Thema" title="Themen" /><em>*</em>:</label>
@@ -3036,7 +3047,7 @@ function thumbnail_erstellen($vollpfad, $datei) {
 		return "Installieren Sie die GD-Funktionen";
 }
 
-function eintragung_grafik_link($pfad, $option, $file_grafic) {
+function eintragung_grafik_link($pfad, $option, $file_grafic) { // html; grafik oder Link eintragen
 	$link="link";
 	if ($file_grafic=="grafic")
 		$link="grafik";
@@ -3080,7 +3091,7 @@ function eintragung_grafik_link($pfad, $option, $file_grafic) {
 
 
 
-function eintragung_aufgabe($id, $pfad) {
+function eintragung_aufgabe($id, $pfad) { // html; Formularinhalt neue/bestehende Aufgabe
 	$db=new db;
     $themen = $db->themen();
 	$buch=$db->buecher();
@@ -3185,7 +3196,7 @@ function eintragung_aufgabe($id, $pfad) {
 	return $inhalt;
 }
 
-function eintragung_test () {
+function eintragung_test () { // html; Formularinhalt neuer Test
 	$db= new db;
 	$notentyp=db_conn_and_sql("SELECT * FROM `notentypen`");
 	$themen=db_conn_and_sql("SELECT * FROM `thema`");
@@ -3215,7 +3226,7 @@ function eintragung_test () {
 }
 
 // deprecated
-function eintragung_link ($mit_typ) {
+function eintragung_link ($mit_typ) { // html; Formularinhalt neue Datei
 	$db = new db;
 	if ($mit_typ)
 		$inhalt.='<label for="link_typ">Typ<em>*</em>:</label> <select id="link_typ" name="link_typ">
@@ -3238,7 +3249,8 @@ function eintragung_link ($mit_typ) {
 	return "nicht mehr noetig";
 }
 
-function eintragung_grafik () {
+// deprecated
+function eintragung_grafik () { // html; Formularinhalt neue Grafik
 		$db = new db;
 		$benutzer=db_conn_and_sql("SELECT * FROM benutzer WHERE id=".$_SESSION['user_id']);
 		$ids = explode(";",sql_result(db_conn_and_sql("SELECT letzte_themen_auswahl FROM fach_klasse WHERE fach_klasse.id=".sql_result($benutzer,0,"letzte_fachklasse")),0,"letzte_themen_auswahl")); array_pop($ids); // ...weil das letzte leer ist
@@ -3252,7 +3264,7 @@ function eintragung_grafik () {
 }
 
 
-function eintragung_sonstiges_material () {
+function eintragung_sonstiges_material () { // html; Formularinhalt neues sonstiges Material
 	$benutzer=db_conn_and_sql("SELECT * FROM benutzer WHERE id=".$_SESSION['user_id']);
 	$letzte_fachklasse=sql_fetch_assoc($benutzer);
 	$letzte_fachklasse=$letzte_fachklasse["letzte_fachklasse"];
@@ -3373,7 +3385,7 @@ function eintragung_inhaltstypen($abschnitt_veraendern) {
 	return $inhalt;
 }
 
-function eintragung_block ($lb, $lehrplan, $klasse, $neue_pos, $block_1, $pfad) {
+function eintragung_block ($lb, $lehrplan, $klasse, $neue_pos, $block_1, $pfad) { // echo Formular fuer einen neuen Block
 	echo '
 		<div class="tooltip" id="tt_block_methodisch">
 		Die Informationen zu den Verkn&uuml;pfungen zu anderen F&auml;chern/Lernbereichen und den methodisch-didaktischen Gedanken erscheinen in der Lernbereichs-&Uuml;bersicht.</div>
@@ -3488,7 +3500,7 @@ function eintragung_abschnitt($id,$block,$lehrplan,$klasse,$position) {
 		return $inhalt;
 }
 
-function eintragung_fk_zp($plan_id) {
+function eintragung_fk_zp($plan_id) { // html; im Stoffverteilungsplan auf Edit-Icon - dort erscheint dieses Fenster
 	$db=new db;
 	$plan=$db->plan($plan_id);
 	if ($_GET["alle_klassen"]=="true")
@@ -3590,6 +3602,8 @@ function abschnitte_zeigen($block,$pfad) {
 	else return "keine Abschnitte in diesem Block vorhanden";
 }
 
+// echo Formular Unterrichtsstunde
+// verwendet: fachklassen_zeitplanung, einzelstundenansicht, $db->blockselect, eintragung_test, eintragung_aufgabe, eintragung_sonstiges_material
 function eintragung_plan($id) {
 	$db =new db;
 	$aktuelles_jahr=$db->aktuelles_jahr();
@@ -4100,6 +4114,7 @@ function eintragung_plan($id) {
 	return $inhalt;
 }
 
+// echo Formular zur Änderung von Überschriften/(Aufgaben)/Material/Text; verwendet: eintragung-aufgabe
 function eintragung_material($typ, $pfad, $id) {
 	$db = new db;
 	switch ($typ) {
@@ -4193,7 +4208,7 @@ function aufgabe_mit_bildern($pfad, $aufgabe, $gruppe, $modus) {
 	return $inhalt;
 }
 
-
+// echo sowohl druck, als auch bearbeitungsansicht von tests und Arbeitsblättern
 function test_druckansicht ($id,$datumsstring) {
 	$db = new db;
 	
@@ -4438,6 +4453,7 @@ function test_druckansicht ($id,$datumsstring) {
 	}
 }
 
+// echo gesamte Druck- bzw. Zweitansicht ($text steht für Layout); berechnet HA-Vergesser und nächste Tests; verwendet hausaufgabe_zeigen, berichtigung_zeigen
 function einzelstunde_druckansicht($plan, $text) {
 		echo "<h4>".$plan["fachklassen_name"].": ".$plan["wochentag"].", ".$plan["datum"]."</h4>";
 		
@@ -4599,7 +4615,7 @@ function einzelstunde_druckansicht($plan, $text) {
 	}
 }
 
-
+// echo Hausaufgabe mit Aufgaben (für Plan Druckansicht)
 function hausaufgabe_zeigen($hausaufgaben_array) {
 	$ausgabe=$hausaufgaben_array["bemerkung"];
 	//if ($hausaufgaben_array["zielgruppe"]!="") $ausgabe.=" / ".$hausaufgaben_array["zielgruppe"];
@@ -4613,7 +4629,7 @@ function hausaufgabe_zeigen($hausaufgaben_array) {
 	return $ausgabe;
 }
 
-function test_zeigen ($test_array) {
+function test_zeigen ($test_array) { // echo LK Terme (lief gut) vom 03.05. +Notenspiegel-Tabelle (für Plan Druckansicht)
 	$ausgabe=$test_array["notentyp_kuerzel"].' '.$test_array["beschreibung"];
 	if ($test_array['kommentar']!="")
         $ausgabe.=' ('.$test_array['kommentar'].')';
@@ -4627,7 +4643,7 @@ function test_zeigen ($test_array) {
 	return $ausgabe;
 }
 
-function berichtigung_zeigen($berichtigung_array) {
+function berichtigung_zeigen($berichtigung_array) { // echo LK Terme zurückgegeben Ber/Unt
 	$ausgabe=$berichtigung_array["notentyp_kuerzel"].' '.$berichtigung_array["beschreibung"].' zur&uuml;ckgegeben: '.$berichtigung_array["zurueckgegeben"].' <b>';
 	if ($berichtigung_array["berichtigung_gefordert"]=="0") $ausgabe.='Ber';
 	if ($berichtigung_array["berichtigung_gefordert"]=="0" and $berichtigung_array["unterschrift_gefordert"]=="0") $ausgabe.='/';
@@ -4636,7 +4652,7 @@ function berichtigung_zeigen($berichtigung_array) {
 	return $ausgabe;
 }
 
-function startzeit ($plan) {
+function startzeit ($plan) { // mktime bei angegebenem Plan
 	$rahmen = db_conn_and_sql ( "SELECT * FROM `plan` WHERE `id`=".$plan);
   
 	$datum=explode("-",sql_result ( $rahmen, 0, 'plan.datum' ));
@@ -4645,6 +4661,7 @@ function startzeit ($plan) {
 	return $zeit;
 }
 
+// array mit berechneten Positionen von Materialien innerhalb eines Abschnittscontainers
 function abschnittsinhaltspositionen($inhalt,$vorgegebene_positionen) {
 	$n=0;
 	foreach ($vorgegebene_positionen as $value) {
@@ -4671,6 +4688,7 @@ function abschnittsinhaltspositionen($inhalt,$vorgegebene_positionen) {
 	return $positionen;
 }
 
+// echo vollständigen Abschnittscontainer inkl. Überschriftenberechnung; verwendet abschnittsinhaltspositionen
 function abschnittsinhalt($abschnitt_array,$bearbeitungsmoeglichkeit,$pfad,$plan) {
 	if(isset($abschnitt_array['ueberschrift'])) {
 		for ($j=0; $j<count($abschnitt_array['ueberschrift']); $j++) {
@@ -4846,6 +4864,7 @@ function abschnittsinhalt($abschnitt_array,$bearbeitungsmoeglichkeit,$pfad,$plan
 	return $return_inhalt;
 }
 
+// array mit einzelnen abschnitten, Pausenzeitberechnung, Hausaufgaben, Tests, Rahmendaten; verwendent abschnittsinhalt
 function planelemente ($plan, $bearbeitungsmoeglichkeit,$pfad) {
     // ist das nicht analog zu function einzelstundenansicht?
 	$db=new db;
@@ -5071,6 +5090,7 @@ function planelemente ($plan, $bearbeitungsmoeglichkeit,$pfad) {
 	return $ansicht;
 }
 
+// array mit minuten, inhalt, hefer...; verwendet: $db->abschnitt; abschnittsinhalt
 function einzelstundenansicht ($abschnitt, $bearbeitungsmoeglichkeit, $pfad) {
 	$ansicht='';
 	$db=new db;
@@ -5103,7 +5123,7 @@ function einzelstundenansicht ($abschnitt, $bearbeitungsmoeglichkeit, $pfad) {
   return $ansicht;
 }
 
-function themenarray_von_oberthema($thema_id) {
+function themenarray_von_oberthema($thema_id) { // SQL (Themen und dessen Unterthemen)
     $unterthemen_result=db_conn_and_sql("SELECT * FROM thema WHERE oberthema=".$thema_id);
     $merged_array=array();
     if (sql_num_rows($unterthemen_result)==0)
@@ -5116,7 +5136,7 @@ function themenarray_von_oberthema($thema_id) {
     }
 }
 
-function thema_und_unterthemen_von($thema_id) {
+function thema_und_unterthemen_von($thema_id) { // SQL (Themen und dessen Unterthemen)
     $themen_array=themenarray_von_oberthema($thema_id);
     for($i=0; $i<count($themen_array); $i++) {
         if ($i>0)
@@ -5126,6 +5146,7 @@ function thema_und_unterthemen_von($thema_id) {
     return ' AND ('.$rueckgabe.')';
 }
 
+// echo; $was=abschnitt/link=datei/buch/grafik/material/aufgabe/testaufgabe/test inklusive Suchfeldern und -ergebnissen
 function eingetragenes_zeigen($was,$nur_anzeigen, $link, $bereich, $ziel_input, $pfad) {
     if (!isset($pfad))
         $pfad='../';
@@ -5543,6 +5564,7 @@ break;
 }
 }
 
+// array mit Positionen von Sitzplan-Objekten, wie Tisch, Computertisch, Doppeltisch...
 function sitzplan_objektzuordnung ($faktor) {
 	// Richtung (Drehung) siehe Nummernpad
 	return array(

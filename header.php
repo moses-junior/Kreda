@@ -77,7 +77,7 @@ $programmversion='0.98C';
 	<script type="text/javascript" src="<?php echo $pfad; ?>jquery-ui/js/jquery-ui-1.8.13.custom.min.js"></script>-->
     
     <!-- deutsche Uebersetzung des JQueryUI-Datepickers -->
-    <script type="text/javascript" src="<?php echo $pfad; ?>jquery-ui/js/jquery.ui.datepicker-de.js"></script>
+    <script type="text/javascript" src="<?php echo $pfad; ?>jquery-ui-neu/datepicker/jquery.ui.datepicker-de.js"></script>
     
     <script type="text/javascript" src="<?php echo $pfad; ?>javascript/jquery_ui_kreda.js"></script>
     

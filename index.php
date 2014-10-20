@@ -1564,9 +1564,9 @@ $(function() {
                         for(i=0;i<=2;i++)
                             if (document.getElementsByName('woche')[i].checked)
                                 week=document.getElementsByName('woche')[i].value;
-                        if (document.getElementById('raum_neu_checkbox').checked)
-                            neuer_raum=1;
-                        else
+                        //if (document.getElementById('raum_neu_checkbox').checked)
+                        //    neuer_raum=1;
+                        //else
                             neuer_raum=0;
                         //alert($( this ).find("input[name='zeit_schule_"+fk_school[document.getElementById('fk_selector').value]+"']").val());
                         //alert($( this ).find("input[name='wochentag']").val());

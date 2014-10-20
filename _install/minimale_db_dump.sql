@@ -1670,7 +1670,14 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `title`, `surname`, `
 ('1', 'testuser', 'testuser@test.de', '', 'User', 'Test', '1', '2014-10-08 19:27:49', '', '', '', '', '', '', '', '', '1', '0', '', '0000-00-00 00:00:00', '0.0.0.0', '');
 
 INSERT INTO `benutzer` (`id`, `aktuelles_schuljahr`, `druckansicht`, `ansicht_2`, `merkhefter`, `letzter_lernbereich`, `letzte_themen_auswahl`, `letzte_schule`, `letzte_fachklasse`, `lb_faktor`, `username`, `zensurenpunkte`, `zensurenkommentare`, `zensuren_unt_ber`, `zensuren_nicht_zaehlen`, `dienstberatungen`, `schuljahresplanung`, `statistiken`, `ustd_planung`, `sitzplan`, `admin`) VALUES 
-('1', '2014', '', '', '1', '', '', '', '', '1.30', 'dontuse', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1');
+('1', '2014', '%Hausaufgaben
+%Tests
+%Struktur
+%Notizen
+%Ziele
+|| %Zeit//%minuten//%Hefter || %Inhalt %Kommentar ||
+%Hausaufgabenvergabe
+%Testankuendigung', '', '1', '', '', '', '', '1.30', 'dontuse', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1');
 
 INSERT INTO `schulart` (`id`, `name`, `kuerzel`) VALUES 
 ('1', 'Gymnasium', 'GY'),

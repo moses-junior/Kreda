@@ -1,1 +1,20 @@
-Readme must be fixed
+Um Kreda zu initialisieren müssen folgende Schritte durchgeführt werden.
+
+0. Server einrichten (LAMP).
+1. MySQL-Datenbank erstellen (Name z.B. kreda) und minimaler_dump.sql einspielen.
+mysql -uroot -p kreda < ./minimaler_dump.sql
+2. Konfiguration in ./config/db.php aktualisieren. Diese Datei darf von außen nicht lesbar sein (Rechte 700 und User www-data).
+3. Anmeldung im localhost erfolgt mit user: "testuser"; pwd: "testuser".
+
+Hinweise:
+=========
+Diese Installation ist jedoch noch nicht sicher.
+
+Eine Schule sollte für die Nutzung über das Internet Yubikeys besorgen (pro Yubikey ca. 17 EUR).
+Die Einrichtung von Yubikeys wird in einer separaten Datei beschrieben.
+
+Sollte eine Eltern-Ansicht der Schülerzensuren geplant sein, nutzen Sie einen zweiten, unabhängigen Server.
+Die FTP-Zugangsdaten müssen in der Datei ./config/db.php hinterlegt sein.
+Für eine reale Nutzung wird ein Cron-Job mit einem FTP-Backup eines verschlüsselten SQL-Dumps empfohlen.
+
+Dies und mehr wird in späteren Versionen dieser Datei beschrieben.

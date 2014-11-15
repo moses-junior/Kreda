@@ -1,0 +1,72 @@
+/*Schriftformatieunrg*/
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+div {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+a:link { color: black; text-decoration: none}
+a:visited { color: black; }
+
+/*Struktur*/
+.wrapper {
+
+}
+
+.inhalt {
+    display: table;
+    margin: 0 auto;
+}
+
+.header {
+    display: table;
+    margin: 0 auto;
+}
+
+body {
+    background-color: #FAFAFA;
+}
+
+/*Tabellenformatirung Zeugnis*/
+.tabelle {
+    border-spacing: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tabelle td {
+
+    border-right-color: white;
+    border-right-width: thin;
+    border-right-style: solid;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.tabelle tr:nth-child(even) {
+    background-color: #E6E6E6;
+}
+
+.tabelle tr:nth-child(odd) {
+    background-color: #FAFAFA;
+}
+
+.last {
+    font-weight: 600;
+    border-right-color: #FAFAFA;
+}
+
+/*Tabellenformatirung Schulstempel*/
+.schulstempel {
+    border-spacing: 20px;
+}

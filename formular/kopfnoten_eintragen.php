@@ -119,7 +119,7 @@
 	while ($kn = sql_fetch_assoc($kopfnoten)) {
 		if ($kn_id_old!=$kn["rahmen"]) {
 			if ($kn_id_old!=0)
-				echo "</li><li>";
+				echo "<br /><br /></li><li>";
 			if ($rahmen==$kn["rahmen"]) {
 				$rahmenname=$kn["name"];
 				$tendenz_erlaubt=$kn["tendenz"];
@@ -151,7 +151,7 @@
 		if ($kn["bearbeitung_ab"]<=date("Y-m-d"))
 			echo '<a href="index.php?tab=noten&amp;option=kopfnote&amp;rahmen='.$kn["rahmen"].'&amp;fach_klasse='.$kn["fach_klasse"].'">'.$subject_classes->nach_ids[$kn["fach_klasse"]]["name"].'</a>;';
 		else
-			echo $subject_classes->nach_ids[$kn["fach_klasse"]]["name"].";";
+			echo '<span style="color: gray;">'.$subject_classes->nach_ids[$kn["fach_klasse"]]["name"].";</span>";
 	}
 	if (sql_num_rows($kopfnoten)>0)
 		echo '</li></ul>';
@@ -259,9 +259,12 @@
 						
 						if ($bearbeitung_bis<date("Y-m-d")) { // nicht <=, sonst ist der letzte Tag nicht mit dabei
 							if (sql_num_rows($kn_vaw_res)>0) {
-								echo $wert;
-								if ($tend==-1) echo "-";
-								if ($kn_vaw["tendenz"]==1) echo "+";
+								if ($wert>0)
+									echo kommazahl($wert/10);
+								if ($kn_vaw["tendenz"]==-1)
+									echo "-";
+								if ($kn_vaw["tendenz"]==1)
+									echo "+";
 							}
 							else
 								echo "-";
@@ -417,16 +420,19 @@
 				}
 				?>
 			</table>
-			<p><input type="checkbox" name="fertig" value="1" required="required" tabindex="<?php echo $anzahl_schueler*($kat_zaehler+1); ?>" />
-			Ich habe die Eintragung mit gr&ouml;&szlig;ter Sorgfalt vorgenommen.
-			</p>
 			<?php
-			// yubikey-laenge wird oben ueberprueft, da teilweise ein Zeichen fehlt und es dadurch zu Fehlern kommt
-			if ($my_user->my["token_id"]!="") {
-				echo '<p>YubiKey-OTP: <input type="text" name="token_otp" id="token_otp" size="15" placeholder="Best&auml;tigungspasswort" tabindex="'.($anzahl_schueler*($kat_zaehler+1)+1).'" /><br /></p>';
-			}
-			?>
-			<button onclick="if (document.getElementById('token_otp')) auswertung=new Array(new Array(0, 'token_otp','yubikey')); pruefe_formular(auswertung); return false;"><img src="<?php echo $pfad; ?>icons/page_save.png" alt="save" /> speichern</button>
+			if (date("Y-m-d")<=$bearbeitung_bis) { ?>
+				<p><input type="checkbox" name="fertig" value="1" required="required" tabindex="<?php echo $anzahl_schueler*($kat_zaehler+1); ?>" />
+					Ich habe die Eintragung mit gr&ouml;&szlig;ter Sorgfalt vorgenommen.
+				</p>
+				<?php
+				// yubikey-laenge wird oben ueberprueft, da teilweise ein Zeichen fehlt und es dadurch zu Fehlern kommt
+				if ($my_user->my["token_id"]!="") {
+					echo '<p>YubiKey-OTP: <input type="text" name="token_otp" id="token_otp" size="15" placeholder="Best&auml;tigungspasswort" tabindex="'.($anzahl_schueler*($kat_zaehler+1)+1).'" /><br /></p>';
+				}
+				?>
+				<button onclick="if (document.getElementById('token_otp')) auswertung=new Array(new Array(0, 'token_otp','yubikey')); pruefe_formular(auswertung); return false;"><img src="<?php echo $pfad; ?>icons/page_save.png" alt="save" /> speichern</button>
+			<?php } ?>
 			</fieldset>
 			</form>
 			<?php

@@ -61,7 +61,7 @@ if ($_GET["hinzufuegen"]=="true") {
 			die("Der YubiKey geh&ouml;rt Ihnen nicht.");
 	}
 	
-	db_conn_and_sql("UPDATE `notenbeschreibung` SET `beschreibung`=".apostroph_bei_bedarf($_POST["beschreibung"]).", `kommentar`=".apostroph_bei_bedarf($_POST["kommentar"]).", `datum`='".datum_punkt_zu_strich($_POST["datum"])."', `korrigiert`=".apostroph_bei_bedarf(datum_punkt_zu_strich($_POST["korrigiert"])).", `zurueckgegeben`=".apostroph_bei_bedarf(datum_punkt_zu_strich($_POST["zurueckgegeben"])).", `halbjahresnote`=".($_POST["halbjahresnote"]+0).", `notentyp`=".injaway($_POST["notentyp"]).", `gesamtpunktzahl`=".leer_NULL($_POST["gesamtpunktzahl"]).", `berichtigung`=".leer_NULL($_POST["berichtigung"]).", `unterschrift`=".leer_NULL($_POST["unterschrift"]).", `mitzaehlen`=".injaway($_POST["mitzaehlen"]).", `bewertungstabelle`=".leer_NULL($_POST["bewertungstabelle"])." WHERE `id`=".$id);
+	db_conn_and_sql("UPDATE `notenbeschreibung` SET `beschreibung`=".apostroph_bei_bedarf($_POST["beschreibung"]).", `kommentar`=".apostroph_bei_bedarf($_POST["kommentar"]).", `datum`='".datum_punkt_zu_strich($_POST["datum"])."', `korrigiert`=".apostroph_bei_bedarf(datum_punkt_zu_strich($_POST["korrigiert"])).", `zurueckgegeben`=".apostroph_bei_bedarf(datum_punkt_zu_strich($_POST["zurueckgegeben"])).", `halbjahresnote`=".($_POST["halbjahresnote"]+0).", `notentyp`=".injaway($_POST["notentyp"]).", `gesamtpunktzahl`=".leer_NULL($_POST["gesamtpunktzahl"]).", `berichtigung`=".leer_NULL($_POST["berichtigung"]).", `unterschrift`=".leer_NULL($_POST["unterschrift"]).", `mitzaehlen`=".injaway($_POST["mitzaehlen"]).", `notenspiegel_zeigen`=".leer_NULL($_POST["notenspiegel_zeigen"]).", `bewertungstabelle`=".leer_NULL($_POST["bewertungstabelle"])." WHERE `id`=".$id);
 	// Planzuordnung -> Datum weg
 	if ($_POST["plan"]!="")
 		db_conn_and_sql("UPDATE `notenbeschreibung` SET `datum`=NULL, `plan`=".leer_NULL($_POST["plan"])." WHERE `id`=".$id);
@@ -670,7 +670,7 @@ else {
 						if (@sql_result($note,0,"noten.wert")===@sql_result($waehlbare_noten,$wn,"bewertung_note.note") and @sql_result($note,0,"noten.zusatz")=="1")
 							$ausgewaehltes_plus=' selected="selected"';
 						echo '<option value="'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'"'.$ausgewaehltes.'>'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'</option>';
-						if (@sql_result($waehlbare_noten,$i,"bewertungstabelle.punkte")!=1) {
+						if (@sql_result($waehlbare_noten,$wn,"bewertungstabelle.punkte")!=1) {
 							echo '<option value="'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'_-"'.$ausgewaehltes_minus.'>'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'-</option>';
 							echo '<option value="'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'_+"'.$ausgewaehltes_plus.'>'.@sql_result($waehlbare_noten,$wn,"bewertung_note.note").'+</option>';
 						}

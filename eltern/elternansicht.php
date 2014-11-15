@@ -36,26 +36,24 @@ $pfad="../";
 <html>
  <head>
 	<title>Elternansicht</title>
-	<meta name="author" content="Micha Schubert, Christopher Wolff" />
-	<meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="Micha Schubert, Christopher Wolff">
+    <meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="content-type" content="application/xhtml+xml; charset=ISO-8859-1" />
-	<meta http-equiv="Content-Script-Type" content="text/javascript" />
-	<meta http-equiv="Content-Style-Type" content="text/css" />
-	<link rel="shortcut icon" href="../look/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" media="screen" type="text/css" href="./format_farbig.css" />
-	<link rel="stylesheet" media="print, embossed" type="text/css" href="./format_drucken.css" />
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="<?php echo $pfad; ?>javascript/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="<?php echo $pfad; ?>javascript/jquery.tipsy.js"></script>
-	<link type="text/css" href="<?php echo $pfad; ?>javascript/jquery.tipsy.css" rel="Stylesheet" />
-	
-    <script type="text/javascript">
-    <!--
-        $(document).ready(function() {
-            $("*").tipsy({html: true, gravity: 'w'});
-        });
-    -->
-    </script>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <!--Stylheets-->
+    <link rel="stylesheet" media="screen" type="text/css" href="./format.css">
+    <link rel="stylesheet" media="print, embossed" type="text/css" href="./format_drucken.css">
+    <!--jqueryLiberay-->
+    <script type="text/javascript" src="./jquery-1.js"></script>
+    <script type="text/javascript" src="./jquery.js"></script>
+    <link type="text/css" href="./jquery.css" rel="Stylesheet">
+    <!--jqueryLiberay-->
+    <script src="./chart/morris.js"></script>
+    <script src="./chart/morris.min.js"></script>
+    <script src="./vektor/raphael-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./chart/morris.css">
+    <!--Externe Daten-->
+    <script src="./tipsy.js"></script>
  </head>
 <?php
 session_start();
@@ -106,7 +104,13 @@ $start_ende=schuljahr_start_ende($jahr, $schul_id);
 		echo '<h2>Zensuren</h2>';
 		
 		echo '<table class="tabelle"><tr><th>Fach</th><th>Noten</th><th>Durchschnitt</th></tr>';
-		$fach_klassen_des_schuelers = db_conn_and_sql("SELECT notenbeschreibung.fach_klasse FROM noten, notenbeschreibung WHERE notenbeschreibung.id=noten.beschreibung AND noten.schueler=".$schueler_id." GROUP BY notenbeschreibung.fach_klasse");
+		$fach_klassen_des_schuelers = db_conn_and_sql("SELECT notenbeschreibung.fach_klasse
+			FROM noten, notenbeschreibung
+			WHERE notenbeschreibung.id=noten.beschreibung
+				AND noten.schueler=".$schueler_id."
+				AND noten.datum>='".$start_ende["start"]."'
+				AND noten.datum<='".$start_ende["ende"]."'
+			GROUP BY notenbeschreibung.fach_klasse");
 		for ($fks=0; $fks<sql_num_rows($fach_klassen_des_schuelers);$fks++) {
 			$fkname=sql_result(db_conn_and_sql("SELECT * FROM faecher, fach_klasse WHERE fach_klasse.fach=faecher.id AND fach_klasse.id=".sql_result($fach_klassen_des_schuelers,$fks,"notenbeschreibung.fach_klasse")),0,"name");
 			// TODO zu aufwaendige Berechnungen; zurueckgegeben wird nicht beim Durchschnitt beruecksichtigt -> eigene funktion noten_von_schueler schreiben

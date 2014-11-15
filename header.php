@@ -114,6 +114,7 @@ $programmversion='0.98C';
     <script type="text/javascript" src="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"></script>
     <script type="text/javascript" src="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/scripts/shBrushPython.js"></script>
     <script type="text/javascript" src="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/scripts/shBrushSql.js"></script>
+    <script type="text/javascript" src="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/styles/shCore.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $pfad; ?>javascript/syntaxhighlighter_3.0.83/styles/shThemeDefault.css" />
     <!-- AsciiMathML implementieren -->

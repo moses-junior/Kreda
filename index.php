@@ -840,9 +840,8 @@ $(function() {
 		}
 		
 		$school_classes = new school_classes($aktuelles_jahr);
-		$schule=db_conn_and_sql("SELECT schule FROM klasse WHERE klasse.id=".$gewaehlte_klasse);
-		$schule=sql_fetch_assoc($schule);
-		$schule=$schule["schule"];
+		$user=new user();
+		$schule=$user->my["letzte_schule"];
 		
 		$sitzplan_arten=db_conn_and_sql("SELECT * FROM `sitzplan` WHERE (`aktiv`=1 AND `schule`=".$schule.") OR `id`=1 ORDER BY `sitzplan`.`name`");
 		
@@ -918,7 +917,7 @@ $(function() {
 				if (sql_result($sitzplaene,$i,"klasse.kl_sitzplan")>0)
 					echo ' | <img src="'.$pfad.'icons/sitzplan_prefered_selected.png" alt="empfohlen" title="dieser Sitzplan wird als Vorgabe anderen Fachlehrern angeboten" />';
 				else
-					if (userrigths("sitzplan_von_kl", $school_classes->cont[$school_classes->active]["id"])==2)
+					if (userrigths("sitzplan_von_kl", $sitzplan_id)==2)
 						echo ' | <a href="'.$pfad.'formular/sitzplan_aktion.php?aktion=empfehlen&amp;sitzplan_klasse_id='.$sitzplan_id.'&amp;klasse_id='.$gewaehlte_klasse.'" class="icon" title="diesen Sitzplan als Vorgabe anderen Fachlehrern anbieten"><img src="'.$pfad.'icons/sitzplan_prefered.png" alt="empfohlen" /></a>';
 				echo ' | 
 						<a href="javascript: window.print();" class="icon" title="drucken"><img src="'.$pfad.'icons/drucken.png" alt="drucken" /></a> |
@@ -3725,7 +3724,13 @@ $(function() {
 		echo '</div>';
 	}
 
-	
+	if ($_GET['tab']=='zeugnisauftrag') {
+		echo '<div class="navigation_3">'.$navigation.'</div>
+			<div class="inhalt">';
+		$formularziel="index.php?tab=zeugnis_auftr";
+		include $pfad."formular/zeugnis_auftrag.php";
+		echo '</div>';
+	}
 	
 	
 	

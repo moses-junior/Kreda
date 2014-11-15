@@ -67,8 +67,10 @@ class subject_classes
             $this->cont[$i]=array(
                 "id"=>$subjectclass_row["fk_id"],
                 "klasse_id"=>$subjectclass_row["k_id"],
+                "fach_id"=>$subjectclass_row["kuerzel"],
                 "farbe"=>$subjectclass_row["farbe"],
                 "lehrauftrag"=>$lehrauftrag,
+                "sitzplan_klasse"=>$subjectclass_row["sitzplan_klasse"],
                 "klassenanzeige"=>$subjectclass_row["klassenanzeige"],
                 "klassenstufe"=>($aktujahr-$subjectclass_row["einschuljahr"]+1),
                 "name"=>html_umlaute($subjectclass_row["kuerzel"])." ".($aktujahr-$subjectclass_row["einschuljahr"]+1).$endung.$gruppenname);
@@ -80,6 +82,9 @@ class subject_classes
 			$this->cont[$i]["farbanzeige"] = '<span style="background-color: #'.$this->cont[$i]["farbe"].'">'.$this->cont[$i]["name"].'</span>';
             if ($last==$subjectclass_row["fk_id"])
                 $this->active=$i;
+            
+            if ($subjectclass_row["sitzplan_klasse"]=="")
+				$this->cont[$i]["sitzplan_klasse"] = $subjectclass_row["kl_sitzplan"];
             
             // zweites Array (nach IDs aufzurufen) erstellen
             $this->nach_ids[$subjectclass_row["fk_id"]] = $this->cont[$i];

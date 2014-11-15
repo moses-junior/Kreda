@@ -33,7 +33,7 @@ session_start();
 $pfad="../";
 include $pfad."funktionen.php";
 
-if ($_GET["aktion"]=="empfehlen" and proofuser("sitzplan_klasse", $_GET["sitzplan_klasse_id"]) and userrigths("sitzplan_von_kl", $_GET["klasse_id"])) {
+if ($_GET["aktion"]=="empfehlen" and proofuser("sitzplan_klasse", $_GET["sitzplan_klasse_id"]) and userrigths("sitzplan_von_kl", $_GET["sitzplan_klasse_id"])) {
 	db_conn_and_sql("UPDATE klasse SET `kl_sitzplan`=".injaway($_GET["sitzplan_klasse_id"])." WHERE `id`=".injaway($_GET["klasse_id"]));
 	header("Location: ../index.php?tab=klassen&auswahl=".$_GET["klasse_id"]."&option=sitzplan&sitzplan_klasse=".$_GET["sitzplan_klasse_id"]);
 	exit;
@@ -46,7 +46,7 @@ if ($_GET["aktion"]=="ueberschreiben") {
 	$klassensitzplan=sql_fetch_assoc($klassensitzplan);
 	if ($klassensitzplan["kl_sitzplan"]!=$_GET["sitzplan_klasse_id"])
 		$klasse_id["klasse"]=0;
-	if (proofuser("sitzplan_klasse", $_GET["sitzplan_klasse_id"]) or userrigths("sitzplan_von_kl", $klasse_id["klasse"])==2) {
+	if (proofuser("sitzplan_klasse", $_GET["sitzplan_klasse_id"]) or userrigths("sitzplan_von_kl", $_GET["sitzplan_klasse_id"])==2) {
 		if (isset($_POST["name"]) and isset($_POST["datum"]))
 			db_conn_and_sql("UPDATE `sitzplan_klasse` SET `name`=".apostroph_bei_bedarf($_POST["name"]).", `seit`='".datum_punkt_zu_strich($_POST["datum"])."' WHERE `id`=".injaway($_GET["sitzplan_klasse_id"]));
 		$i=0;

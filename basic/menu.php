@@ -141,6 +141,7 @@
                 "lehrauftrag"=>array("name"=>"Lehrauftr&auml;ge", "pic"=>"fach_klasse.png", "link"=>"index.php?tab=lav"),
                 "stichtag"   =>array("name"=>"Stichtagsnotenauftrag", "pic"=>"stichtagsnote.png", "link"=>"index.php?tab=stichnoten"),
                 "kopfnote"   =>array("name"=>"Kopfnotenauftrag", "pic"=>"kopfnote.png", "link"=>"index.php?tab=kopfnoten"),
+                "zeugnis_auftr"=>array("name"=>"Zeugnisauftrag", "pic"=>"zeugnis.png", "link"=>"index.php?tab=zeugnisauftrag"),
 
                 "ueber"     =>array("name"=>"&Uuml;ber...", "pic"=>"hinweis.png", "link"=>"info.php", "newwin"=>1),
                 "direkt"    =>array("name"=>"Direkthilfe", "link"=>"", "inactive"=>1),
@@ -180,7 +181,7 @@
                 "zensuren_einstellungen"=>$menue_punkte["zensuren_einstellungen"],
                 "stichtagsnoten"=>$menue_punkte["stichtag"],
                 "kopfnoten"=>$menue_punkte["kopfnote"],
-                //zeugnis
+                "zeugnis_auftr"=>$menue_punkte["zeugnis_auftr"],
             )),
             "unterricht"=>array("name"=>"Unterricht", "pic"=>"unterricht.png", "link"=>"index.php?tab=stundenplanung&amp;auswahl=fkplan", "sub"=>array(
                 "material"=>$menue_punkte["material"],
@@ -208,7 +209,7 @@
 				//"stammgruppen"=>$menue_punkte["stammgruppen"],
                 "lehrauftrag"=>$menue_punkte["lehrauftrag"],
                 "fehlzeiten"=>$menue_punkte["fehlzeiten"],
-                "eltern"=>$menue_punkte["eltern"],
+                //"eltern"=>$menue_punkte["eltern"],
                 "schuelerliste"=>$menue_punkte["schuelerliste"],
                 "kontakte"=>$menue_punkte["kontakte"],
                 "angestellte"=>$menue_punkte["angestellte"],
@@ -267,6 +268,7 @@
 			unset($menubar["zensuren"]["sub"]["zensuren_einstellungen"]);
 			unset($menubar["zensuren"]["sub"]["stichtagsnoten"]);
 			unset($menubar["zensuren"]["sub"]["kopfnoten"]);
+			unset($menubar["zensuren"]["sub"]["zeugnis_auftr"]);
 		}
 		if (!$my_user->my["schulleitung"] and !$my_user->my["verwaltung"]) {
 			unset($menubar["grunddaten"]);
@@ -326,9 +328,9 @@
 		}
 	}
 	
-    // TODO nur Lehrer haben Fach-Klassen (-> unset)
+    // TODO nur Lehrer haben Fach-Klassen (-> unset); Falls Verwaltung nur eine Schule hat, kann der Schulwaehler weg
     
-    // Stoffverteilung und lernbereichsübersicht deaktivieren, wenn kein Stundenplaneintrag existiert
+    // Stoffverteilung und Lernbereichsuebersicht deaktivieren, wenn kein Stundenplaneintrag existiert
     if ($subject_classes->cont[$subject_classes->active]["id"]>0 and db_conn_and_sql("SELECT * FROM stundenplan WHERE stundenplan.fach_klasse=".$subject_classes->cont[$subject_classes->active]["id"]." AND stundenplan.schuljahr=".$aktuelles_jahr)->num_rows<1) {
 		$menubar["unterricht"]["sub"]["lb_uebersicht"]["inactive"]=true;
 		$menubar["unterricht"]["sub"]["stoffverteilung"]["inactive"]=true;

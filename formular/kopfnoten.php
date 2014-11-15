@@ -99,6 +99,34 @@ if($_GET["eintragen"]=="bearbeiten" and userrigths("kopfnotenrahmen", injaway($_
 	echo 'Es wurden '.$neue_fks.' neue Fach-Klasse-Kombinationen beauftragt ('.$aktualisierte_fks.' Auftr&auml;ge blieben unber&uuml;hrt).</div>';
 }
 
+// Erstellen einer Kopfnoten-Kategorie
+if ($_GET["knkat_eintragen"]=="true" and userrigths("kopfnoten", $schule)==2) {
+	$knk_existiert=db_conn_and_sql("SELECT name FROM kopfnoten_kategorie
+		WHERE schule=".injaway($schule)."
+			AND name=".apostroph_bei_bedarf($_POST["name"]));
+	if (sql_num_rows($knk_existiert)>0)
+		echo "SELECT name FROM kopfnoten_kategorie
+		WHERE schule=".injaway($schule)."
+			AND name=".apostroph_bei_bedarf($_POST["name"]).'<div class="hinweis">Kategorie "'.trim($_POST["name"]).'" existiert bereits.</div>';
+	else
+		db_conn_and_sql("INSERT INTO kopfnoten_kategorie (name, beschreibung, schule) VALUES (".apostroph_bei_bedarf($_POST["name"]).", ".apostroph_bei_bedarf($_POST["beschreibung"]).", ".$schule.");");
+	
+}
+
+// Bearbeiten einer Kopfnoten-Kategorie
+if ($_GET["knkat_eintragen"]=="bearbeiten" and userrigths("kopfnoten", $schule)==2) {
+	$knk_existiert=db_conn_and_sql("SELECT name FROM kopfnoten_kategorie
+		WHERE schule=".injaway($schule)."
+			AND id<>".injaway($_POST["knkat_id"])."
+			AND name=".apostroph_bei_bedarf($_POST["name"]));
+	if (sql_num_rows($knk_existiert)>0)
+		echo '<div class="hinweis">Kategorie "'.trim($_POST["name"]).'" existiert bereits.</div>';
+	else
+		db_conn_and_sql("UPDATE kopfnoten_kategorie SET name=".apostroph_bei_bedarf($_POST["name"]).", beschreibung=".apostroph_bei_bedarf($_POST["beschreibung"])." WHERE id=".injaway($_POST["knkat_id"]));
+}
+
+
+// Loeschen eines Kopfnotenauftrags
 if($_GET["eintragen"]=="loeschen" and userrigths("kopfnotenrahmen", injaway($_GET["loeschen"]))==2) {
 	// einzelnoten loeschen
 	db_conn_and_sql("DELETE FROM kopfnote WHERE rahmen=".injaway($_GET["loeschen"]));
@@ -246,3 +274,25 @@ $kopfnoten=db_conn_and_sql("SELECT DISTINCT kopfnote_rahmen.*, klasse.id AS klas
 		}
 ?>
 </table>
+<h3>Bestehende Kopfnoten-Kategorien:</h3>
+<?php
+	$knk_result=db_conn_and_sql("SELECT id, name FROM kopfnoten_kategorie WHERE schule=".$schule." ORDER BY name");
+	while ($meine_knk=sql_fetch_assoc($knk_result))
+		echo $meine_knk["name"].' <a href="'.$pfad.$formularziel.'&amp;knkat_bearbeiten='.$meine_knk["id"].'" class="icon"><img src="'.$pfad.'icons/edit.png" alt="edit" /></a> | ';
+?>
+<form action="<?php echo $pfad.$formularziel."&amp;knkat_eintragen="; if ($_GET["knkat_bearbeiten"]>0) echo "bearbeiten"; else echo "true"; ?>" method="post">
+	<fieldset>
+		<legend><?php if ($_GET["knkat_bearbeiten"]>0 and userrigths("kopfnoten", $schule)==2) {
+				echo "Kopfnotenkategorie bearbeiten";
+				echo '<input type="hidden" name="knkat_id" value="'.injaway($_GET["knkat_bearbeiten"]).'" />';
+				$meine_knk=db_conn_and_sql("SELECT * FROM kopfnoten_kategorie WHERE id=".injaway($_GET["knkat_bearbeiten"])." AND schule=".injaway($schule));
+				$meine_knk=sql_fetch_assoc($meine_knk);
+			}
+			else
+				echo "neue Kopfnotenkategorie erstellen"; ?>
+			</legend>
+		<label for="name">Name<em>*</em>:</label> <input type="text" name="name"<?php if ($_GET["knkat_bearbeiten"]>0) echo ' value="'.$meine_knk["name"].'"'; ?> placeholder="z.B. Betragen, Flei&szlig, Mitarbeit..." required="required" size="15" maxlength="40"<?php if ($_GET["bearbeiten"]>0) echo ' value="'.$meine_kn["name"].'"'; ?>/><br />
+		<label for="beschreibung">Beschreibung:</label> <textarea name="beschreibung"><?php if ($_GET["knkat_bearbeiten"]>0) echo $meine_knk["beschreibung"]; ?></textarea><br />
+		<input type="submit" value="hinzuf&uuml;gen" />
+	</fieldset>
+</form>

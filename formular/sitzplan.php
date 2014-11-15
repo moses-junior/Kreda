@@ -46,7 +46,7 @@
 // $sitzplan_id kommt von index.php
 if (injaway($sitzplan_id)>0 and !proofuser("sitzplan_klasse",$sitzplan_id)) {
 	// welcher Sitzplan ist der Klassenlehrer-Sitzplan? - und ist dazu wenigstens Leseberechtigung da?
-	if ($sitzplan_id==$school_classes->cont[$school_classes->active]["kl_sitzplan"] and userrigths("sitzplan_von_kl", $school_classes->cont[$school_classes->active]["id"])==0)
+	if ($sitzplan_id==$school_classes->cont[$school_classes->active]["kl_sitzplan"] and userrigths("sitzplan_von_kl", $sitzplan_id)==0)
 		die("Sie sind nicht berechtigt, den Sitzplan zu bearbeiten.");
 }
 

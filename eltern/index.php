@@ -28,26 +28,56 @@
 //
 //  Sie sollten eine Kopie der GNU Affero Public License zusammen mit diesem
 //  Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
+header('Content-Type: text/html; charset=ISO-8859-1');
 ?>
-<!DOCTYPE HTML>
-
+<!DOCTYPE html>
 <html>
-   <head>
-	<title>Zensuren</title>
-	<meta name="author" content="automatisch generiert durch Kreda" />
-	<meta name="robots" content="noindex, nofollow" />
-	<meta http-equiv="Content-Script-Type" content="text/javascript" />
-	<meta http-equiv="Content-Style-Type" content="text/css" />
+<head>
+    <title>Zensuren - Ansicht</title>
+    <meta name="author" content="Micha Schubert, Christopher Wolff">
+    <meta name="robots" content="noindex, nofollow">
 	<meta http-equiv="content-type" content="application/xhtml+xml; charset=ISO-8859-1" />
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <!--Stylheets-->
+    <link rel="stylesheet" media="screen" type="text/css" href="./format.css">
+    <link rel="stylesheet" media="print, embossed" type="text/css" href="./format_drucken.css">
+    <!--jqueryLiberay-->
+    <script type="text/javascript" src="./jquery-1.js"></script>
+    <script type="text/javascript" src="./jquery.js"></script>
+    <link type="text/css" href="./jquery.css" rel="Stylesheet">
+    <!--jqueryLiberay-->
+    <script src="./chart/morris.js"></script>
+    <script src="./chart/morris.min.js"></script>
+    <script src="./vektor/raphael-min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./chart/morris.css">
+    <!--Externe Daten-->
+    <script src="./tipsy.js"></script>
+
 </head>
 <body>
+	<div class="wrapper">
+	<div class="header">
+		<table class="schulstempel" width="100%">
+			<tr>
+				<th>
+					<img src="logo.gif" alt="logo">
+				</th>
+				<th>
+					Evangelische Schulgemeinschaft Erzgebirge <br />
+					Stra&szlig;e der Freundschaft 11 <br />
+					09456 Annaberg-Buchholz <br />
+				</th>
+			</tr>
+		</table>
+	</div>
+	<div class="inhalt">
 <?php
 header('Content-Type: text/html; charset=ISO-8859-1');
 
 if (empty($_POST["username"])) {
 	echo '<form action="./index.php" method="post">
-		<label for="username">Benutzername: <input type="text" name="username" /></label><br />
-		<label for="password">Passwort: <input type="password" name="password" /></label><br />
+		<label for="username" style="width: 160px; float: left;">Benutzername:</label> <input type="text" name="username" /><br />
+		<label for="password" style="width: 160px; float: left;">Passwort:</label> <input type="password" name="password" /><br />
 		<input type="submit" value="absenden" />
 	</form>';
 }
@@ -65,14 +95,22 @@ else {
 		}
 	}
 	
-	if (!$username_gefunden or $password!=$my_schueler["pwd"])
+	// rudimentaere Bruteforce-Vermeidung
+	session_start();
+	if ($_SESSION["schueler_pwd_gesperrt_bis"]!="" and $_SESSION["schueler_pwd_gesperrt_bis"]>date("H:i:s"))
+		die("Sie sind noch bis ".$_SESSION["schueler_pwd_gesperrt_bis"]." Uhr gesperrt, wegen falscher Passworteingabe");
+	
+	//if (!$username_gefunden)
+	//	die ("Dieser Benutzer existiert nicht, oder wurde nicht freigegeben.");
+	
+	// 
+	//if (md5($password.$export_pwd)!=$my_schueler["pwd"])
+	//	die ("Passwort ist nicht korrekt.");
+	
+	if (!$username_gefunden or md5($password.$export_pwd)!=$my_schueler["pwd"]) {
+		$_SESSION["schueler_pwd_gesperrt_bis"]=date("H:i:s", mktime()+5);
 		die ("Dieser Benutzer existiert nicht, oder das Passwort ist nicht korrekt.");
-	
-	if (!$username_gefunden)
-		die ("Dieser Benutzer existiert nicht, oder wurde nicht freigegeben.");
-	
-	if ($password!=$my_schueler["pwd"])
-		die ("Passwort ist nicht korrekt.");
+	}
 	
 	// ----------------- Dechiffrierung Initialisieren ------------------------------
 	// Open the cipher
@@ -92,7 +130,21 @@ else {
 		//mcrypt_generic_init($td, $key, $iv);
 		
 		// Decrypt encrypted string
-		echo $my_schueler["html"];
+		$ks=24;
+		$key = substr(md5($password.md5($export_pwd)), 0, $ks);
+
+		$decrypted_data = mcrypt_ecb (MCRYPT_3DES, $key, base64_decode(substr(stripslashes($my_schueler["html"]), 0, -1)), MCRYPT_DECRYPT);
+		// debugging:
+		//echo "<br />encrypt Pwd: ".$key."<br>Export Salt: ".$export_pwd."<br>md5 des eingegebenen Pwd: ".$password."<br>Salted Schuelerpwd der Datei: ".$my_schueler["pwd"]."<br /><br /><br />";
+		//echo strlen($my_schueler["html"])."<br /><br /><br />";
+		//echo strlen(stripslashes($my_schueler["html"]))."<br /><br /><br />";
+		//echo strlen(substr(stripslashes($my_schueler["html"]), 0, -1))."<br /><br /><br />";
+		//echo strlen($decrypted_data)."<br /><br /><br />";
+		//echo strlen(mcrypt_ecb (MCRYPT_3DES, $key, base64_decode(substr(stripslashes($my_schueler["html"]), 0, -1)), MCRYPT_DECRYPT))."<br /><br /><br />";
+		echo $decrypted_data."<br /><br /><br />";
+		
+		
+		//echo $my_schueler["html"];
 		//$decrypted = mdecrypt_generic($td, base64_decode($schuelerarray[497]));
 		
 		// Terminate decryption handle and close module
@@ -106,7 +158,10 @@ else {
 	//echo $export_pwd;
 	//echo $schuelerarray[497];
 	//echo $decrypted . "\n";
+	echo '<p>Stand: '.$export_date.'</p>';
 }
 ?>
+</div>
+</div>
 </body>
 </html>

@@ -56,6 +56,9 @@ if ($_GET["eintragen"]=="true") {
 			geburtsort=".apostroph_bei_bedarf($_POST['geburtsort']).",
 			krankenkasse=".apostroph_bei_bedarf($_POST['krankenkasse']).",
 			notfall=".apostroph_bei_bedarf($_POST['notfall']).",
+			klasse=".injaway($_POST['ziel_klasse']).",
+			stammgruppe=".injaway($_POST['stammgruppe']).",
+			bildungsgang=".injaway($_POST['bildungsgang']).",
 			number=".apostroph_bei_bedarf($_POST['number']).",
 			username=".apostroph_bei_bedarf($_POST['username']).$passwort."
 		WHERE id=".injaway($_POST['schueler_id']));
@@ -85,6 +88,7 @@ if ($_GET["eintragen"]=="true") {
 		ORDER BY ".$order);
 	
 	?>
+	<a href="<?php echo $pfad."formular/schuelerpassworte_vergeben.php"; ?>" onclick="fenster(this.href, 'no title'); return false;" style="float: right;">Sch&uuml;lerpassw&ouml;rter vergeben</a><br />
 	<a href="<?php echo $pfad."formular/import_von_fuxschool.php"; ?>" style="float: right;">FuxSchool-Import</a>
 	<style type="text/css">
 		.th1, .td1 {width:70px; }
@@ -173,6 +177,7 @@ if ($_GET["eintragen"]=="true") {
 	$sorgeberechtigte=db_conn_and_sql("SELECT users.*, eltern_schueler.* FROM users, eltern_schueler WHERE eltern_schueler.schueler=".injaway($_GET["s_id"])." AND eltern_schueler.user=users.user_id");
 	$sb1=sql_fetch_assoc($sorgeberechtigte);
 	$sb2=sql_fetch_assoc($sorgeberechtigte);
+	$sb3=sql_fetch_assoc($sorgeberechtigte);
 	// SB: mail, fax, tel, status (Elt, fam, alleinerz, nur Vater, nur Mutter, Vormund), Postempfaenger
 	?>
     <form action="<?php echo $formularziel; ?>&amp;eintragen=true<?php if ($_GET["s_id"]>0) echo '&amp;s_id'.injaway($_GET["s_id"]); ?>" method="post" accept-charset="ISO-8859-1">
@@ -199,7 +204,7 @@ if ($_GET["eintragen"]=="true") {
         </li>
         </ol>
 	</fieldset>
-	<fieldset style="width: 450px; float: left;">
+	<fieldset style="width: 630px; float: left;">
 		<legend>Sorgeberechtigte:</legend>
 		<ol class="divider">
 			<li>
@@ -207,43 +212,56 @@ if ($_GET["eintragen"]=="true") {
 					<select name="sb1_status"><option>Eltern</option><option>Familie</option><option>Alleinerz.</option><option>nur Vater</option><option>nur Mutter</option><option>Vormund</option></select>
 					<input type="checkbox" name="sb1_sorgeberechtigung" /> <span style="display:inline-block; text-align: left; width: 30px;">&nbsp;</span>
 					<select name="sb2_status"><option>Eltern</option><option>Familie</option><option>Alleinerz.</option><option>nur Vater</option><option>nur Mutter</option><option>Vormund</option></select>
-					<input type="checkbox" name="sb2_sorgeberechtigung" />
+					<input type="checkbox" name="sb2_sorgeberechtigung" /> <span style="display:inline-block; text-align: left; width: 30px;">&nbsp;</span>
+					<select name="sb3_status"><option>Eltern</option><option>Familie</option><option>Alleinerz.</option><option>nur Vater</option><option>nur Mutter</option><option>Vormund</option></select>
+					<input type="checkbox" name="sb3_sorgeberechtigung" />
 					<br />
 				<label for="sb1_male">Geschlecht:</label>
-					<input type="radio" name="sb1_male" value="1"<?php if($sb1["male"]!="0") echo ' checked="checked"'; ?> /> m | <input type="radio" name="sb1_male" value="0"<?php if($sb1["male"]=="0") echo ' checked="checked"'; ?> /> w <span style="display:inline-block; text-align: left; width: 60px;">&nbsp;</span>
-					<input type="radio" name="sb2_male" value="1"<?php if($sb2["male"]!="0") echo ' checked="checked"'; ?> /> m | <input type="radio" name="sb2_male" value="0"<?php if($sb2["male"]=="0") echo ' checked="checked"'; ?> /> w<br />
+					<input type="radio" name="sb1_male" value="1"<?php if($sb1["male"]=="1") echo ' checked="checked"'; ?> /> m | <input type="radio" name="sb1_male" value="0"<?php if($sb1["male"]=="0") echo ' checked="checked"'; ?> /> w <span style="display:inline-block; text-align: left; width: 60px;">&nbsp;</span>
+					<input type="radio" name="sb2_male" value="1"<?php if($sb2["male"]=="1") echo ' checked="checked"'; ?> /> m | <input type="radio" name="sb2_male" value="0"<?php if($sb2["male"]=="0") echo ' checked="checked"'; ?> /> w <span style="display:inline-block; text-align: left; width: 60px;">&nbsp;</span>
+					<input type="radio" name="sb3_male" value="1"<?php if($sb3["male"]=="1") echo ' checked="checked"'; ?> /> m | <input type="radio" name="sb2_male" value="0"<?php if($sb3["male"]=="0") echo ' checked="checked"'; ?> /> w<br />
 				<label for="sb1_title">Titel:</label>
 					<input type="text" name="sb1_title" value="<?php echo html_umlaute($sb1["title"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_title" value="<?php echo html_umlaute($sb2["title"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_title" value="<?php echo html_umlaute($sb2["title"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_title" value="<?php echo html_umlaute($sb3["title"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_surname">Name:</label>
 					<input type="text" name="sb1_surname" value="<?php echo html_umlaute($sb1["surname"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_surname" value="<?php echo html_umlaute($sb2["surname"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_surname" value="<?php echo html_umlaute($sb2["surname"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_surname" value="<?php echo html_umlaute($sb3["surname"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_forename">Vorname:</label>
 					<input type="text" name="sb1_forename" value="<?php echo html_umlaute($sb1["forename"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_forename" value="<?php echo html_umlaute($sb2["forename"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_forename" value="<?php echo html_umlaute($sb2["forename"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_forename" value="<?php echo html_umlaute($sb3["forename"]); ?>" style="width: 140px;" /><br />
 			</li><li>
 				<label for="sb1_adress">Stra&szlig;e:</label>
 					<input type="text" name="sb1_adress" value="<?php echo html_umlaute($sb1["adress"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_adress" value="<?php echo html_umlaute($sb2["adress"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_adress" value="<?php echo html_umlaute($sb2["adress"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_adress" value="<?php echo html_umlaute($sb3["adress"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_postal_code">PLZ:</label>
 					<input type="text" name="sb1_postal_code" value="<?php echo html_umlaute($sb1["postal_code"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_postal_code" value="<?php echo html_umlaute($sb2["postal_code"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_postal_code" value="<?php echo html_umlaute($sb2["postal_code"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_postal_code" value="<?php echo html_umlaute($sb3["postal_code"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_city">Ort:</label>
 					<input type="text" name="sb1_city" value="<?php echo html_umlaute($sb1["city"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_city" value="<?php echo html_umlaute($sb2["city"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_city" value="<?php echo html_umlaute($sb2["city"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_city" value="<?php echo html_umlaute($sb3["city"]); ?>" style="width: 140px;" /><br />
 			</li><li>
 				<label for="sb1_user_email">E-Mail:</label>
 					<input type="text" name="sb1_user_email" value="<?php echo html_umlaute($sb1["user_email"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_user_email" value="<?php echo html_umlaute($sb2["user_email"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_user_email" value="<?php echo html_umlaute($sb2["user_email"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_user_email" value="<?php echo html_umlaute($sb3["user_email"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_tel1">Telefon1:</label>
 					<input type="text" name="sb1_tel1" value="<?php echo html_umlaute($sb1["tel1"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_tel1" value="<?php echo html_umlaute($sb2["tel1"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_tel1" value="<?php echo html_umlaute($sb2["tel1"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_tel1" value="<?php echo html_umlaute($sb3["tel1"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_tel2">Telefon2:</label>
 					<input type="text" name="sb1_tel2" value="<?php echo html_umlaute($sb1["tel2"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_tel2" value="<?php echo html_umlaute($sb2["tel2"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_tel2" value="<?php echo html_umlaute($sb2["tel2"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_tel2" value="<?php echo html_umlaute($sb3["tel2"]); ?>" style="width: 140px;" /><br />
 				<label for="sb1_tel3">Telefon3:</label>
 					<input type="text" name="sb1_tel3" value="<?php echo html_umlaute($sb1["tel3"]); ?>" style="width: 140px;" />
-					<input type="text" name="sb2_tel3" value="<?php echo html_umlaute($sb2["tel3"]); ?>" style="width: 140px;" /><br />
+					<input type="text" name="sb2_tel3" value="<?php echo html_umlaute($sb2["tel3"]); ?>" style="width: 140px;" />
+					<input type="text" name="sb3_tel3" value="<?php echo html_umlaute($sb3["tel3"]); ?>" style="width: 140px;" /><br />
 			</li><li>
 				<label for="krankenkasse">KK:</label> <input type="text" name="krankenkasse" value="<?php echo html_umlaute($edit_s["krankenkasse"]); ?>" placeholder="Krankenkasse" title="Krankenkasse" size="15" maxlength="50" /><br />
 				<label for="notfall">im Notfall:</label> <input type="text" name="notfall" value="<?php echo html_umlaute($edit_s["notfall"]); ?>" placeholder="Notfallansprechpartner" title="Notfallansprechpartner" size="15" maxlength="150" /><br />
@@ -259,7 +277,7 @@ if ($_GET["eintragen"]=="true") {
 		<label for="number">Sch&uuml;lernummer:</label> <input type="text" name="number" value="<?php echo html_umlaute($edit_s["number"]); ?>" placeholder="Sch&uuml;lernummer" title="Sch&uuml;lernummer" size="1" maxlength="10" /><br />
 		<label for="username">Zugang:</label> <input type="text" name="username" value="<?php echo html_umlaute($edit_s["username"]); ?>" placeholder="Benutzername" title="Benutzername" size="6" maxlength="15" />
 			<input type="text" name="passwort" placeholder="Passwort" title="nur eintragen, falls es ge&auml;ndert werden soll" size="2" maxlength="35" /><br />
-		<label for="klasse">Klasse, Stammg:</label> <select name="ziel_klasse">
+		<label for="ziel_klasse">Klasse, Stammg:</label> <select name="ziel_klasse">
 			<?php while ($klasse=sql_fetch_assoc($klassen)) {
 				echo '<option value="'.$klasse["id"].'"';
 				if ($klasse["id"]==$edit_s["k_id"])
@@ -268,7 +286,23 @@ if ($_GET["eintragen"]=="true") {
 			}
 			?>
 			</select>
-			<select name="stammgruppe" title="Stammgruppe"><option>-</option><option value="1">M1</option><option value="2">M2</option><option value="3">O1</option><option value="4">O2</option></select><br />
+			<?php //$stammgruppen=db_conn_and_sql("SELECT stammgruppe.*, schueler.stammgruppe FROM stammgruppe LEFT JOIN schueler ON schueler.id=".$edit_s["id"]." AND schueler.stammgruppe=stammgruppe.id WHERE stammgruppe.schule=".$schule." ORDER BY stammgruppe.name"); ?>
+			<select name="stammgruppe" title="Stammgruppe"><option>-</option>
+				<?php while($sgr=sql_fetch_assoc($stammgruppen)) {
+					echo '<option value="'.$sgr["id"].'"';
+					if ($sgr["stammgruppe"]>0) echo ' selected="selected"';
+					echo '>'.$sgr["name"].'</option>';
+				} ?>
+			</select><br />
+		<label for="bildungsgang">Bildungsgang:</label>
+			<?php //$bildungsgang=db_conn_and_sql("SELECT bildungsgang.*, schueler.bildungsgang FROM bildungsgang LEFT JOIN schueler ON schueler.id=".$edit_s["id"]." AND schueler.bildungsgang=bildungsgang.id ORDER BY bildungsgang.name"); ?>
+			<select name="bildungsgang" title="Bildungsgang des Sch&uuml;lers"><option>-</option>
+				<?php while($big=sql_fetch_assoc($bildungsgang)) {
+					echo '<option value="'.$big["id"].'"';
+					if ($big["bildungsgang"]>0) echo ' selected="selected"';
+					echo '>'.$big["name"].'</option>';
+				} ?>
+			</select><br />
 		<!--<select name="geschlecht"><option value="1">m</option><option value="0"<?php if($edit_s["maennlich"]=="0") echo ' selected="selected"'; ?>>w</option></select><br />-->
 		</li>
 		<li>

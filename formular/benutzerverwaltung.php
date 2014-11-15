@@ -35,17 +35,6 @@ $my_schule=$user->my["letzte_schule"];
 if (userrigths("benutzerverwaltung", $my_schule)!=2)
 	die("Sie haben nicht die erforderlichen Rechte, um Angestellte zu verwalten.");
 
-function randomPassword() {
-    $alphabet = "abcdefghijkmnpqrstuwxyzABCDEFGHKLMNPQRSTUWXYZ123456789"; // ohne o, O, 0, I, J
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-    for ($i = 0; $i < 8; $i++) {
-        $n = rand(0, $alphaLength);
-        $pass[] = $alphabet[$n];
-    }
-    return implode($pass); //turn the array into a string
-}
-
 // FIXME: delete me
 if ($_GET["benutzer"]==true)
 	$_SESSION["user_id"]=injaway($_GET["user_id"]);

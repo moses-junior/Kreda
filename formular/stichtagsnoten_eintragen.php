@@ -99,11 +99,11 @@
 	$stichtagsnoten=db_conn_and_sql("SELECT *
 		FROM stichtagsnote_fk, stichtagsnote_rahmen
 		WHERE stichtagsnote_fk.rahmen=stichtagsnote_rahmen.id
-			AND stichtagsnote_rahmen.bearbeitung_ab<=".$CURDATE."
 			AND stichtagsnote_rahmen.bearbeitung_ab>".apostroph_bei_bedarf($start_ende["start"])."
 			AND stichtagsnote_rahmen.bearbeitung_ab<".apostroph_bei_bedarf($start_ende["ende"])."
 			AND user=".$_SESSION["user_id"]."
 		ORDER BY stichtagsnote_rahmen.bearbeitung_bis DESC, stichtagsnote_rahmen.id");
+		//			AND stichtagsnote_rahmen.bearbeitung_ab<=".$CURDATE."
 	
 	echo '<h3>Stichtagsnoten</h3>';
 	
@@ -125,7 +125,10 @@
 		echo ' ';
 		if ($stn["fertig"])
 			echo '<img src="'.$pfad.'icons/haekchen.png" alt="fertig" title="'.datum_strich_zu_punkt_uebersichtlich($stn["fertig"], true, false).'" />';
-		echo '<a href="index.php?tab=noten&amp;option=stichtagsnote&amp;rahmen='.$stn["rahmen"].'&amp;fach_klasse='.$stn["fach_klasse"].'">'.$subject_classes->nach_ids[$stn["fach_klasse"]]["name"].'</a>;';
+		if ($stn["bearbeitung_ab"]<=date("Y-m-d"))
+			echo '<a href="index.php?tab=noten&amp;option=stichtagsnote&amp;rahmen='.$stn["rahmen"].'&amp;fach_klasse='.$stn["fach_klasse"].'">'.$subject_classes->nach_ids[$stn["fach_klasse"]]["name"].'</a>;';
+		else
+			echo '<span style="color: gray;">'.$subject_classes->nach_ids[$stn["fach_klasse"]]["name"].";</span>";
 	}
 	if (sql_num_rows($stichtagsnoten)>0)
 		echo '</li></ul>';

@@ -1,48 +1,64 @@
 /*Schriftformatieunrg*/
-h1 { 
-	font-family:		'Open Sans', sans-serif;
-	font-weight:		700; 
-	font-size:			16px;
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
 }
 
-h2{
-	font-family: 		'Open Sans', sans-serif;
-	font-weight:		400; 
-	font-size:			14px
+h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px
 }
 
-div{
-	font-family: 		'Open Sans', sans-serif;
-	font-weight: 		300; 
-	font-size:			12px;
+div {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
 }
-a{
-	display:			none;
+
+a {
+    display: none;
 }
 
 /*Struktur*/
-.inhalt{
-	display: 			table;
-    margin: 			0 auto;	
+.inhalt {
+    display: table;
+    margin: 0 auto;
 }
-.header{
-	display: 			table;
-    margin: 			0 auto;
+
+.header {
+    display: table;
+    margin: 0 auto;
 }
 
 /*Tabellenformatirung Zeugnis*/
-.tabelle  {
-   border-spacing:		0px;
-}
-.tabelle tr:nth-child(even) {
-   background-color:	#D8D8D8;
+.tabelle {
+    border-spacing: 0;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
-.last{
-	font-weight:		600;
+.tabelle td {
+
+    border-right-color: white;
+    border-right-width: thin;
+    border-right-style: solid;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+.tabelle tr:nth-child(even) {
+    background-color: #D8D8D8;
+}
+
+.last {
+    font-weight: 600;
+    border-right-color: white;
 }
 
 /*Tabellenformatirung Schulstempel*/
-.schulstempel  {
-   border-spacing:		20px;
+.schulstempel {
+    border-spacing: 20px;
 }

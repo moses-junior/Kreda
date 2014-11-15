@@ -37,7 +37,7 @@
 						$woche = datum_zu_woche($datum);
 						echo "tests_woche[".datum_zu_woche($datum)."]='';\n";
 					}
-					echo "tests_woche[".datum_zu_woche($datum)."]+='".$einzeltest["fach_kuerzel"]." (".$einzeltest["lehrerkuerzel"].") ".$einzeltest["notentyp_kuerzel"]." ".$einzeltest["beschreibung"]." (".datum_strich_zu_punkt_uebersichtlich($datum, "wochentag_kurz", false).")<br />';\n";
+					echo "tests_woche[".datum_zu_woche($datum)."]+='".addslashes($einzeltest["fach_kuerzel"])." (".addslashes($einzeltest["lehrerkuerzel"]).") ".addslashes($einzeltest["notentyp_kuerzel"])." ".addslashes($einzeltest["beschreibung"])." (".datum_strich_zu_punkt_uebersichtlich($datum, "wochentag_kurz", false).")<br />';\n";
 				}
 				?>
 				</script>

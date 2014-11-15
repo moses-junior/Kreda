@@ -964,6 +964,16 @@ class db
 
 
 // ------------------------------ kurze allgemeine Funktionen ------------------------------------
+	function randomPassword() {
+		$alphabet = "abcdefghijkmnpqrstuwxyzABCDEFGHKLMNPQRSTUWXYZ123456789-_:;!$%&()=?+*#"; // ohne o, O, 0, I, J; Paragraph-Zeichen problematisch (erzeugt A mit Dach)
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 10; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		return implode($pass); //turn the array into a string
+	}
 
     function arab2roman($ar) // wandelt Integerzahl $ar in roemische Zahlzeichen um (sofern $ar <= 3999)
     {
@@ -1090,17 +1100,21 @@ class db
 	
     // wird von iconv benoetigt
     setlocale(LC_CTYPE, 'de_DE.UTF-8');
-    
-	function pictureOfPupil ($surname, $forename, $number, $username, $path, $options) { // erzeugt <img...> falls Datei existiert
-		$filename='';
+    function usernameOfPupil ($surname, $forename, $number, $username) {
 		if (empty($username)) {
 			$forename_ascii=iconv("ISO-8859-1", "ASCII//TRANSLIT", $forename);
 			$surname_ascii =iconv("ISO-8859-1", "ASCII//TRANSLIT", $surname);
 			if ($number>0)
-				$filename=strtolower(substr($forename_ascii,0,1)).strtolower(substr($surname_ascii,0,2)).$number;
+				$return=strtolower(substr($forename_ascii,0,1)).strtolower(substr($surname_ascii,0,2)).$number;
 		}
 		else
-			$filename=$username;
+			$return=$username;
+		
+		return $return;
+	}
+    
+	function pictureOfPupil ($surname, $forename, $number, $username, $path, $options) { // erzeugt <img...> falls Datei existiert
+		$filename=usernameOfPupil($surname, $forename, $number, $username);
 		
 		if ($filename!='') {
 			$pictureFile=$path.'daten/pupilpictures/'.$filename.'.jpg';
@@ -1198,7 +1212,10 @@ class db
 			case "kopfnoten_klasse":     $schule=sql_fetch_assoc(db_conn_and_sql("SELECT schule FROM klasse WHERE klasse.id=".$id)); $schule=$schule["schule"]; break;
 			case "zensurentypen":		 $schule=$id; break;
 			case "notenberechnungsvorlagen": $schule=$id; break;
-			case "sitzplan_von_kl":		 $schule=sql_fetch_assoc(db_conn_and_sql("SELECT schule FROM klasse WHERE klasse.id=".$id)); $schule=$schule["schule"]; break;
+			case "sitzplan_von_kl":		 $schule=sql_fetch_assoc(db_conn_and_sql("SELECT klasse.schule, klasse.id FROM sitzplan_klasse, klasse WHERE sitzplan_klasse.klasse=klasse.id AND sitzplan_klasse.id=".$id));
+										 $id=$schule["id"]; // $id wird zum Berechnen des Klassenlehrers gebraucht
+										 $schule=$schule["schule"];
+										 break;
 			case "sitzanordnungen":		 $schule=$id; break;
 			case "sitzanordnung":		 $schule=sql_fetch_assoc(db_conn_and_sql("SELECT schule FROM sitzplan WHERE sitzplan.id=".$id)); $schule=$schule["schule"]; break;
 			//case "schuljahr": $schul_result=db_conn_and_sql("SELECT schule FROM schuljahr WHERE schuljahr.id=".$id); break;
@@ -1765,9 +1782,16 @@ class db
 		$schnitt_HJ1=array("zaehler"=>"0", "nenner"=>"0");
 		$schnitt_HJ2=array("zaehler"=>"0", "nenner"=>"0");
 		$schnitt_GJ =array("zaehler"=>"0", "nenner"=>"0");
-		$gruppen_schnitt_HJ1='';
-		$gruppen_schnitt_HJ2='';
-		$gruppen_schnitt_GJ ='';
+		$gruppen_schnitt_HJ1=array();
+		$gruppen_schnitt_HJ2=array();
+		$gruppen_schnitt_GJ =array();
+		$schnitt_HJ1_zg=array("zaehler"=>"0", "nenner"=>"0");
+		$schnitt_HJ2_zg=array("zaehler"=>"0", "nenner"=>"0");
+		$schnitt_GJ_zg =array("zaehler"=>"0", "nenner"=>"0");
+		$gruppen_schnitt_HJ1_zg=array();
+		$gruppen_schnitt_HJ2_zg=array();
+		$gruppen_schnitt_GJ_zg =array();
+		$alles_faktor_1=false;
 		
 		//$einzelnoten_array=array();
 		//if (count($durchschnitt_hier)>0)
@@ -1775,57 +1799,98 @@ class db
 		//	$einzelnoten_array[]=$value["notenbeschreibung_id"].";".$value["wert"].";".$value["punktzahl_mit_komma"].";".$value["gesamtpunktzahl"].";".$value["datum"].";".$value["halbjahresnote"].";".$value["notenzusatz"].";".$value["mitzaehlen"].";".$value["kommentar"];
 		//}
 		
+		$datum_heute_sql=date("Y-m-d");
+		
 		if (count($durchschnitt_hier)>0)
 		foreach ($durchschnitt_hier as $value) if ($value["mitzaehlen"]) {
-			// TODO: irgendwie $value["zurueckgegeben"] einbeziehen und mehrere Durchschnitte berechnen
+			$zurueckgegeben=datum_punkt_zu_strich($value["zurueckgegeben"]);
 			
 			// fuer die Ganzjahresnote von Bedeutung?
 			if ($value["halbjahresnote"]) {
 				// Notengruppen? notengruppe notengruppen_faktor
 				if ($value["notengruppe"]>0) {
+					if ($datum_heute_sql>$zurueckgegeben) {
+						$gruppen_schnitt_HJ1_zg[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
+						$gruppen_schnitt_HJ1_zg[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
+						$gruppen_schnitt_HJ1_zg[$value["notengruppe"]]["nenner"]+=$value["faktor"];
+					}
 					$gruppen_schnitt_HJ1[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
 					$gruppen_schnitt_HJ1[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
 					$gruppen_schnitt_HJ1[$value["notengruppe"]]["nenner"]+=$value["faktor"];
 				}
 				else {
+					if ($datum_heute_sql>$zurueckgegeben) {
+						$schnitt_HJ1_zg["zaehler"]+=$value["faktor"]*$value["wert"];
+						$schnitt_HJ1_zg["nenner"]+=$value["faktor"];
+					}
 					$schnitt_HJ1["zaehler"]+=$value["faktor"]*$value["wert"];
 					$schnitt_HJ1["nenner"]+=$value["faktor"];
 				}
 			}
 			else {
 				if ($value["notengruppe"]>0) {
+					if ($datum_heute_sql>$zurueckgegeben) {
+						$gruppen_schnitt_HJ2_zg[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
+						$gruppen_schnitt_HJ2_zg[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
+						$gruppen_schnitt_HJ2_zg[$value["notengruppe"]]["nenner"]+=$value["faktor"];
+					}
 					$gruppen_schnitt_HJ2[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
 					$gruppen_schnitt_HJ2[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
 					$gruppen_schnitt_HJ2[$value["notengruppe"]]["nenner"]+=$value["faktor"];
 				}
 				else {
+					if ($datum_heute_sql>$zurueckgegeben) {
+						$schnitt_HJ2_zg["zaehler"]+=$value["faktor"]*$value["wert"];
+						$schnitt_HJ2_zg["nenner"]+=$value["faktor"];
+					}
 					$schnitt_HJ2["zaehler"]+=$value["faktor"]*$value["wert"];
 					$schnitt_HJ2["nenner"]+=$value["faktor"];
 				}
 			}
 			
 			if ($value["notengruppe"]>0) {
+				if ($datum_heute_sql>$zurueckgegeben) {
+					$gruppen_schnitt_GJ_zg[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
+					$gruppen_schnitt_GJ_zg[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
+					$gruppen_schnitt_GJ_zg[$value["notengruppe"]]["nenner"]+=$value["faktor"];
+				}
 				$gruppen_schnitt_GJ[$value["notengruppe"]]["notengruppen_faktor"]=$value["notengruppen_faktor"];
 				$gruppen_schnitt_GJ[$value["notengruppe"]]["zaehler"]+=$value["faktor"]*$value["wert"];
 				$gruppen_schnitt_GJ[$value["notengruppe"]]["nenner"]+=$value["faktor"];
 				
 				// Ausgabe Berechnung
-				if (!isset($gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]))
-					$gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]=true;
-				if ($value["faktor"]!=1)
-					$gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]=false;
+				if (!isset($gruppen_schnitt_GJ["alles_faktor_1"]))
+					$alles_faktor_1=true;
+				if (!isset($gruppen_schnitt_GJ["alles_faktor_1"]) and $datum_heute_sql>$zurueckgegeben)
+					$alles_faktor_1=true;
+				
+				if ($value["faktor"]!=1) {
+					$alles_faktor_1=false;
+					if ($datum_heute_sql>$zurueckgegeben)
+						$alles_faktor_1=false;
+				}
 				
 				if ($value["halbjahresnote"]) {
 					$gruppen_schnitt_HJ1[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_HJ1[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
+					if ($datum_heute_sql>$zurueckgegeben)
+						$gruppen_schnitt_HJ1_zg[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_HJ1_zg[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
 				}
 				else {
 					$gruppen_schnitt_HJ2[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_HJ2[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
+					if ($datum_heute_sql>$zurueckgegeben)
+						$gruppen_schnitt_HJ2_zg[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_HJ2_zg[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
 				}
 				$gruppen_schnitt_GJ[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_GJ[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
+				if ($datum_heute_sql>$zurueckgegeben)
+					$gruppen_schnitt_GJ_zg[$value["notengruppe"]]=berechnung_notendurchschnitt_1($gruppen_schnitt_GJ_zg[$value["notengruppe"]], $value["wert"], $value["faktor"], $value["notengruppen_faktor"]);
 			}
 			else { // alle Zensuren gleichwertig
 				$schnitt_GJ["zaehler"]+=$value["faktor"]*$value["wert"];
 				$schnitt_GJ["nenner"]+=$value["faktor"];
+				if ($datum_heute_sql>$zurueckgegeben) {
+					$schnitt_GJ_zg["zaehler"]+=$value["faktor"]*$value["wert"];
+					$schnitt_GJ_zg["nenner"]+=$value["faktor"];
+				}
 			}
 			
 		}
@@ -1837,7 +1902,7 @@ class db
 				$schnitt_HJ1["nenner"]+=$einzelgruppe["notengruppen_faktor"];
 				
 				// Berechnung Ausgabe
-				$schnitt_HJ1["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ1["berechnung"], $einzelgruppe, $gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]);
+				$schnitt_HJ1["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ1["berechnung"], $einzelgruppe, $alles_faktor_1);
 			}
 		if ($gruppen_schnitt_HJ2!="" and isset($gruppen_schnitt_HJ2))
 			foreach ($gruppen_schnitt_HJ2 as $einzelgruppe) {
@@ -1845,7 +1910,7 @@ class db
 				$schnitt_HJ2["nenner"]+=$einzelgruppe["notengruppen_faktor"];
 				
 				// Berechnung Ausgabe
-				$schnitt_HJ2["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ2["berechnung"], $einzelgruppe, $gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]);
+				$schnitt_HJ2["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ2["berechnung"], $einzelgruppe, $alles_faktor_1);
 			}
 		
 		if ($gruppen_schnitt_GJ!="")
@@ -1854,7 +1919,7 @@ class db
 			$schnitt_GJ["nenner"]+=$einzelgruppe["notengruppen_faktor"];
 			
 			// Berechnung Ausgabe
-			$schnitt_GJ["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_GJ["berechnung"], $einzelgruppe, $gruppen_schnitt_GJ[$value["notengruppe"]]["alles_faktor_1"]);
+			$schnitt_GJ["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_GJ["berechnung"], $einzelgruppe, $alles_faktor_1);
 		}
 		
 		// Ausgabe in array
@@ -1876,6 +1941,54 @@ class db
 			$schueler_grundlagen_hier['ganzjahres_schnitt_berechnung']=$schnitt_GJ["berechnung"];
 		}
 		else $schueler_grundlagen_hier['ganzjahres_schnitt_komma']="-";
+		
+		
+		// alles ab "Notengruppen dazu" NOCHMAL mit zurueckgegeben:
+		if ($gruppen_schnitt_HJ1_zg!="" and isset($gruppen_schnitt_HJ1_zg))
+			foreach ($gruppen_schnitt_HJ1_zg as $einzelgruppe) {
+				$schnitt_HJ1_zg["zaehler"]+=$einzelgruppe["notengruppen_faktor"]*($einzelgruppe["zaehler"]/$einzelgruppe["nenner"]);
+				$schnitt_HJ1_zg["nenner"]+=$einzelgruppe["notengruppen_faktor"];
+				
+				// Berechnung Ausgabe
+				$schnitt_HJ1_zg["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ1_zg["berechnung"], $einzelgruppe, $alles_faktor_1);
+			}
+		if ($gruppen_schnitt_HJ2_zg!="" and isset($gruppen_schnitt_HJ2_zg))
+			foreach ($gruppen_schnitt_HJ2_zg as $einzelgruppe) {
+				$schnitt_HJ2_zg["zaehler"]+=$einzelgruppe["notengruppen_faktor"]*($einzelgruppe["zaehler"]/$einzelgruppe["nenner"]);
+				$schnitt_HJ2_zg["nenner"]+=$einzelgruppe["notengruppen_faktor"];
+				
+				// Berechnung Ausgabe
+				$schnitt_HJ2_zg["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_HJ2_zg["berechnung"], $einzelgruppe, $alles_faktor_1);
+			}
+		
+		if ($gruppen_schnitt_GJ_zg!="")
+		foreach ($gruppen_schnitt_GJ_zg as $einzelgruppe) {
+			$schnitt_GJ_zg["zaehler"]+=$einzelgruppe["notengruppen_faktor"]*($einzelgruppe["zaehler"]/$einzelgruppe["nenner"]);
+			$schnitt_GJ_zg["nenner"]+=$einzelgruppe["notengruppen_faktor"];
+			
+			// Berechnung Ausgabe
+			$schnitt_GJ_zg["berechnung"]=berechnung_notendurchschnitt_ausgabe($schnitt_GJ_zg["berechnung"], $einzelgruppe, $alles_faktor_1);
+		}
+		
+		// Ausgabe in array
+		if ($schnitt_HJ1_zg["nenner"]>0) {
+			$schueler_grundlagen_hier['halbjahres_schnitt_zg']=$schnitt_HJ1_zg["zaehler"]/$schnitt_HJ1_zg["nenner"];
+			$schueler_grundlagen_hier['halbjahres_schnitt_komma_zg']=kommazahl(round($schueler_grundlagen_hier['halbjahres_schnitt_zg'],2));
+			$schueler_grundlagen_hier['halbjahres_schnitt_berechnung_zg']=$schnitt_HJ1_zg["berechnung"];
+		}
+		else $schueler_grundlagen_hier['halbjahres_schnitt_komma_zg']="-";
+		if ($schnitt_HJ2_zg["nenner"]>0) {
+			$schueler_grundlagen_hier['halbjahr_2_schnitt_zg']=$schnitt_HJ2_zg["zaehler"]/$schnitt_HJ2_zg["nenner"];
+			$schueler_grundlagen_hier['halbjahr_2_schnitt_komma_zg']=kommazahl(round($schueler_grundlagen_hier['halbjahr_2_schnitt_zg'],2));
+			$schueler_grundlagen_hier['halbjahr_2_schnitt_berechnung_zg']=$schnitt_HJ2_zg["berechnung"];
+		}
+		else $schueler_grundlagen_hier['halbjahr_2_schnitt_komma_zg']="-";
+		if ($schnitt_GJ_zg["nenner"]>0) {
+			$schueler_grundlagen_hier['ganzjahres_schnitt_zg']=$schnitt_GJ_zg["zaehler"]/$schnitt_GJ_zg["nenner"];
+			$schueler_grundlagen_hier['ganzjahres_schnitt_komma_zg']=kommazahl(round($schueler_grundlagen_hier['ganzjahres_schnitt_zg'],2));
+			$schueler_grundlagen_hier['ganzjahres_schnitt_berechnung_zg']=$schnitt_GJ_zg["berechnung"];
+		}
+		else $schueler_grundlagen_hier['ganzjahres_schnitt_komma_zg']="-";
 		
 		//if ($neu_berechnen) {
 		//	db_conn_and_sql("DELETE FROM notenstand WHERE schueler=".$schueler_grundlagen_hier["id"]." AND fach=".$fach_id);
@@ -1924,7 +2037,7 @@ class db
 				while ($fach_klassen_anderer_lehrer=sql_fetch_assoc($lehrauftraege_anderer_lehrer))
 					$fach_klassen_mit_selben_lehrauftrag.=" OR `notenbeschreibung`.`fach_klasse`=".$fach_klassen_anderer_lehrer["fach_klasse"];
 			}
-			$notenbeschreibung=db_conn_and_sql("SELECT notenbeschreibung.id, notenbeschreibung.beschreibung, notenbeschreibung.kommentar, notentypen.kuerzel, notenbeschreibung.zurueckgegeben, notenbeschreibung.gesamtpunktzahl, notenbeschreibung.halbjahresnote, notenbeschreibung.mitzaehlen, notenbeschreibung.test, notenbeschreibung.fach_klasse, notenbeschreibung.notenspiegel, notenbeschreibung.durchschnitt,
+			$notenbeschreibung=db_conn_and_sql("SELECT notenbeschreibung.id, notenbeschreibung.beschreibung, notenbeschreibung.kommentar, notentypen.kuerzel, notenbeschreibung.zurueckgegeben, notenbeschreibung.gesamtpunktzahl, notenbeschreibung.halbjahresnote, notenbeschreibung.mitzaehlen, notenbeschreibung.test, notenbeschreibung.fach_klasse, notenbeschreibung.notenspiegel, notenbeschreibung.notenspiegel_zeigen, notenbeschreibung.durchschnitt,
 					IF(`notenbeschreibung`.`datum` IS NULL,`plan`.`datum`,`notenbeschreibung`.`datum`) as `MyDatum`
 				FROM `notentypen`,`notenbeschreibung` LEFT JOIN `plan` ON `notenbeschreibung`.`plan`=`plan`.`id`
 				WHERE (`notenbeschreibung`.`fach_klasse`=".$fach_klasse.$fach_klassen_mit_selben_lehrauftrag.")
@@ -2021,6 +2134,7 @@ class db
 					'nichtInGruppe'=>false,
 					'punkte_oder_zensuren'=>$punkte_noten_array[0]["punkte"],
 					'mitzaehlen'=>$notenspalte["mitzaehlen"],
+					'notenspiegel_zeigen'=>$notenspalte["notenspiegel_zeigen"],
 					'meine_fach_klasse'=>$meine_fachklasse,
 					'lehrer_kuerzel'=>$user
 					);
@@ -2128,6 +2242,7 @@ class db
 							$beschreibung[$j]['nichtInGruppe']=true;
 						$durchschnitt[$i][$j]=array(
 							"notenbeschreibung_id"=>$beschreibung[$j]["id"], // nur fuer Speichern in notenstand noetig
+							"zurueckgegeben"=>$beschreibung[$j]["zurueckgegeben"], // nur fuer Elternexport noetig
 							"wert"=>$berechnungen_row["wert"],
 							"gesamtpunktzahl"=>$berechnungen_row["geamtpunktzahl"], // kein Schreibfehler
 							"faktor"=>$berechnungen_row["faktor"],
@@ -5024,6 +5139,7 @@ function planelemente ($plan, $bearbeitungsmoeglichkeit,$pfad) {
 		
         if (sql_result($result,$i,"abschnittsplanung.abschnitt")>0) {
             //$ansicht['abschnitte'][$i+$pausenzaehler]['methode']=html_umlaute(sql_result ($result,$i,'abschnitt.methode'));
+            $ansicht['abschnitte'][$i+$pausenzaehler]['abschnitt_id']=sql_result ($result,$i,'abschnittsplanung.abschnitt');
             $ansicht['abschnitte'][$i+$pausenzaehler]['medium']=html_umlaute(sql_result ($medium,0,'medium.kuerzel'));
             $ansicht['abschnitte'][$i+$pausenzaehler]['sozialform']=html_umlaute(sql_result ( $soz_form, 0, 'sozialform.kuerzel' ));
             $ansicht['abschnitte'][$i+$pausenzaehler]['handlungsmuster']=html_umlaute(@sql_result ($handlungsmuster,0,'handlungsmuster.kuerzel'));
